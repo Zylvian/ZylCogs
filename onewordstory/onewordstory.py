@@ -228,6 +228,7 @@ class OneWordStory(commands.Cog):
             return message.author != self.bot.user and message.channel.id == ctx.channel.id
         
         join_users = list()
+        global join_users
         begin = datetime.datetime.now()
         current = begin
         # The time before it starts.
@@ -264,8 +265,7 @@ class OneWordStory(commands.Cog):
             # return random.randint(30, 120)
             
         # Let the One WOrd Story start!
-        join_users_copy = join_users.copy()
-        start_line = random.choice(startup_lines)
+        start_line, join_users = random.choice(startup_lines)
         await ctx.send("Alright, lets begin! I'll go first: \n**{}**".format(start_line))
         await asyncio.sleep(3)
         start_line = start_line.strip(".")
@@ -278,7 +278,7 @@ class OneWordStory(commands.Cog):
         start_line += "."
         # A string with all the user's nicks.
         users_string = "**Creators**: "
-        for user in join_users_copy:
+        for user in join_users:
             users_string += user.display_name + ", "
 
         # Removes last two words.
@@ -296,8 +296,7 @@ class OneWordStory(commands.Cog):
             title = "One Word Story #{}".format(counter),
             description = ('{}').format(embed_string)
             )
-        
-        # FIX THIS
+
         # Sends the OWS in the current channel.
         await ctx.send(embed=embed)
         await self.config.guild(ctx.guild).set_raw(game_name, 'Counter', value = counter)
@@ -311,7 +310,7 @@ class OneWordStory(commands.Cog):
         # Saves the newest OWS.
         embed_dict = embed.to_dict()
 
-        await self.save_ows_embed(ctx, join_users_copy, embed_dict, counter, game_name)
+        await self.save_ows_embed(ctx, join_users, embed_dict, counter, game_name)
         newdelmsg = await ctx.send("Round finished!")
         delmsgs.append(newdelmsg)
         return 1, delmsgs
@@ -345,7 +344,7 @@ class OneWordStory(commands.Cog):
         user_time_add = await self.config.guild(ctx.guild).get_raw('User_time_add')
 
         user_cd = await self.config.guild(ctx.guild).get_raw('Answer_time')
-        all_users = join_users[:] # Optionally join_users.copy()
+        pick_users = join_users.copy()
         cd_users = list()
         maxwordcount = await self.config.guild(ctx.guild).get_raw('Max_words')
         wordcount = 0
@@ -360,15 +359,15 @@ class OneWordStory(commands.Cog):
                 tempuser = None
                 while(True):
                     try:
-                        tempuser = random.choice(join_users)
+                        tempuser = random.choice(pick_users)
                         cd_users.append(tempuser)
-                        join_users.remove(tempuser)
+                        pick_users.remove(tempuser)
                         break
                     
                     except IndexError:
-                        join_users = cd_users
+                        pick_users = cd_users
                         cd_users = list()
-                        tempuser = random.choice(join_users)
+                        tempuser = random.choice(pick_users)
                    
                 current = datetime.datetime.now()
                 current=(timeout_value - (current-begin).seconds)
@@ -401,7 +400,7 @@ class OneWordStory(commands.Cog):
                             await ctx.send("Only one word!")
                     # Any other people typing
                     else:
-                        (join_users, join_bool) = await self.join_user_add(ctx, message, join_users)
+                        (pick_users, join_bool) = await self.join_user_add(ctx, message, pick_users)
                     
             # Either stops the game or goes to the next user.
             except asyncio.TimeoutError:
@@ -411,7 +410,7 @@ class OneWordStory(commands.Cog):
                 
                 # IF TIMER
                 if timer <= 0:
-                    return start_line
+                    return start_line, pick_users
 
                 else:
                     await ctx.send("Time out! Next user!")
