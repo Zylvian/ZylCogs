@@ -112,7 +112,7 @@ class OneWordStory(commands.Cog):
 
         self.gconf = self.config.guild(ctx.guild)
 
-        current_categories = await self.gconf.get_raw("Startup_lines")
+        current_categories = await self.gconf.Startup_lines()
         default_json_lines_dict = await self.get_default_lines(ctx)
         default_json_categories = list(default_json_lines_dict["Startup_lines"])
 
@@ -146,7 +146,7 @@ class OneWordStory(commands.Cog):
     @lines.command()
     async def rem(self, ctx):
         self.gconf = self.config.guild(ctx.guild)
-        current_categories = await self.gconf.get_raw("Startup_lines")
+        current_categories = await self.gconf.Startup_lines()
         list_string = ""
         for i, item in enumerate(current_categories):
             list_string += "\n**{}**. {}".format(i+1, item)
