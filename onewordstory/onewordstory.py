@@ -402,7 +402,9 @@ class OneWordStory(commands.Cog):
                             await ctx.send("Only one word!")
                     # Any other people typing
                     else:
+                        print("we in here")
                         (join_users, join_bool) = await self.join_user_add(ctx, message, pick_users)
+                        print("we ain't here")
                         timeout_value += user_time_add
                     
             # Either stops the game or goes to the next user.
