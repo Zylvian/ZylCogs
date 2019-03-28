@@ -261,7 +261,7 @@ class OneWordStory(commands.Cog):
                 (join_users, join_bool) = await self.join_user_add(ctx, message, join_users)
                 if join_bool:
                     bonus_round_time += user_time_add
-                    await ctx.send("+{} 🕒 total seconds have been added to the game clock!".format(user_time_add))
+                    await ctx.send("+{} 🕒 total seconds have been added to the game clock!".format(bonus_round_time))
 
                 
         except asyncio.TimeoutError:
@@ -279,10 +279,8 @@ class OneWordStory(commands.Cog):
         await ctx.send("Alright, lets begin! I'll go first: \n**{}**".format(start_line))
         await asyncio.sleep(3)
         start_line = start_line.strip(".")
-        #start_line = start_line.strip('"')
         
         # Takes user input on a cycle.
-        ## INPUT PLACE
         start_line, end_users  = await self.take_input(ctx, join_users, start_line, bonus_round_time)
 
         start_line += "."
@@ -409,7 +407,7 @@ class OneWordStory(commands.Cog):
                     # Any other people typing
                     else:
                         (join_users, join_bool) = await self.join_user_add(ctx, message, join_users)
-                        if join_bool:I 
+                        if join_bool:
                             timeout_value += user_time_add
 
                     
@@ -421,7 +419,7 @@ class OneWordStory(commands.Cog):
                 
                 # IF TIMER
                 if timer <= 0:
-                    return start_line, pick_users
+                    return start_line, join_users
 
                 else:
                     await ctx.send("Time out! Next user!")
