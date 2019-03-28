@@ -53,6 +53,7 @@ class OneWordStory(commands.Cog):
 
 
     def __init__(self,bot):
+        self.tasks = []
         self.bot = bot
         self.config = Config.get_conf(self, 420420420, force_registration=True)
         self.path = bundled_data_path(self)
@@ -72,6 +73,11 @@ class OneWordStory(commands.Cog):
         # If releasing, make sure to change the channel ID. Can be an available command with e.g set_channel
         
         self.config.register_guild(**ows_defaults)
+
+    """Required to stop shit that's looping"""
+    def __unload(self):
+        for task in self.tasks:
+            task.cancel()
 
     @checks.mod_or_permissions(administrator=True)
     @commands.group(autohelp=True)
@@ -187,6 +193,9 @@ class OneWordStory(commands.Cog):
  
     @ows.command()
     async def start(self, ctx):
+        self.tasks.append(self.bot.loop.create_task(self.start_cont(ctx)))
+
+    async def start_cont(self, ctx):
         """Starts a game of One Word Story!"""
 
         """ows_values = {
@@ -262,7 +271,6 @@ class OneWordStory(commands.Cog):
             delmsg = await ctx.send(stop_line)
             delmsgs.append(delmsg)
             return 1, delmsgs
-            # return random.randint(30, 120)
             
         # Let the One WOrd Story start!
         start_line = random.choice(startup_lines)
@@ -357,16 +365,12 @@ class OneWordStory(commands.Cog):
             try:
 
                 # Picks a random user.
-                while True:
-                    try:
-                        tempuser = random.choice(pick_users)
-                        cd_users.append(tempuser)
-                        pick_users.remove(tempuser)
-                        break
-                    except IndexError:
-                        pick_users = join_users.copy()
-                        cd_users = list()
-                   
+                if not pick_users:
+                    pick_users = join_users.copy()
+
+                tempuser = random.choice(pick_users)
+                pick_users.remove(tempuser)
+
                 current = datetime.datetime.now()
                 current=(timeout_value - (current-begin).seconds)
 
