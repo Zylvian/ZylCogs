@@ -257,13 +257,17 @@ class OneWordStory(commands.Cog):
                 message = await self.bot.wait_for('message',    
                                               timeout=(start_time - (current-begin).seconds),check=usercheck
                                               )
+                # Checks if the bad boy needs to be added.
                 (join_users, join_bool) = await self.join_user_add(ctx, message, join_users)
-                
-                # await message.delete()
+                if join_bool:
+                    bonus_round_time += user_time_add
+                    await ctx.send("+{} 🕒 total seconds have been added to the game clock!".format(user_time_add))
+
                 
         except asyncio.TimeoutError:
             pass
-        
+
+        # If the list is empty
         if not join_users:
             stop_line = random.choice(sad_lines)
             delmsg = await ctx.send(stop_line)
@@ -329,11 +333,13 @@ class OneWordStory(commands.Cog):
         await self.gconf.set_raw(game_name, counter, "Participants",value=participants)
         await self.gconf.set_raw(game_name, counter, "Timestamp",value=int(time.time()))
 
+    """
+    Checks if the message is user join worthy.
+    """
     async def join_user_add(self, ctx, message:discord.Message, join_users:list):
         if(message.author not in join_users and message.content.lower()=="ows"):
                 join_users.append(message.author)
-                await ctx.send("{} joined!+{} 🕒 total seconds have been added to the game clock!".format(message.author.mention, bonus_round_time))
-                timeout_value += user_time_add
+                await ctx.send("{} joined!".format(message.author.mention))
                 return (join_users, True)
         else:
             return (join_users, False) 
@@ -403,6 +409,8 @@ class OneWordStory(commands.Cog):
                     # Any other people typing
                     else:
                         (join_users, join_bool) = await self.join_user_add(ctx, message, join_users)
+                        if join_bool:I 
+                            timeout_value += user_time_add
 
                     
             # Either stops the game or goes to the next user.
