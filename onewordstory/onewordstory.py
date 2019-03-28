@@ -211,6 +211,7 @@ class OneWordStory(commands.Cog):
         current_categories = await self.gconf.get_raw("Startup_lines")
         filepath = self.path / 'default_lines.json'
         startup_lines = list()
+        global bonus_round_time
         bonus_round_time = 0
 
         with open(filepath) as json_file:  
@@ -257,9 +258,6 @@ class OneWordStory(commands.Cog):
                                               timeout=(start_time - (current-begin).seconds),check=usercheck
                                               )
                 (join_users, join_bool) = await self.join_user_add(ctx, message, join_users)
-                if join_bool:
-                    bonus_round_time += user_time_add
-                    await ctx.send("+{} 🕒 total seconds have been added to the game clock!".format(bonus_round_time))
                 
                 # await message.delete()
                 
@@ -334,7 +332,8 @@ class OneWordStory(commands.Cog):
     async def join_user_add(self, ctx, message:discord.Message, join_users:list):
         if(message.author not in join_users and message.content.lower()=="ows"):
                 join_users.append(message.author)
-                await ctx.send("{} joined!".format(message.author.mention))
+                await ctx.send("{} joined!+{} 🕒 total seconds have been added to the game clock!".format(message.author.mention, bonus_round_time))
+                timeout_value += user_time_add
                 return (join_users, True)
         else:
             return (join_users, False) 
@@ -347,6 +346,7 @@ class OneWordStory(commands.Cog):
         begin = datetime.datetime.now()
         current = begin
         # COOLDOWN TIMEOUT WHATEVER
+        global timeout_value
         timeout_value = await self.config.guild(ctx.guild).get_raw('Round_time')
         timeout_value += bonus_round_time
         # Adds time to the clock when users join.
@@ -402,10 +402,8 @@ class OneWordStory(commands.Cog):
                             await ctx.send("Only one word!")
                     # Any other people typing
                     else:
-                        print("we in here")
                         (join_users, join_bool) = await self.join_user_add(ctx, message, join_users)
-                        print("we ain't here")
-                        timeout_value += user_time_add
+
                     
             # Either stops the game or goes to the next user.
             except asyncio.TimeoutError:
