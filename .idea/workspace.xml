@@ -56,15 +56,15 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/onewordstory/onewordstory.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="249">
-              <caret line="267" column="30" selection-start-line="267" selection-start-column="30" selection-end-line="267" selection-end-column="30" />
+            <state relative-caret-position="215">
+              <caret line="229" column="27" selection-start-line="229" selection-start-column="27" selection-end-line="229" selection-end-column="27" />
               <folding>
                 <element signature="e#11#25#0" expanded="true" />
-                <marker date="1553744416641" expanded="true" signature="3163:3168" ph="..." />
-                <marker date="1553744416641" expanded="true" signature="3379:3388" ph="..." />
-                <marker date="1553744416641" expanded="true" signature="4210:4215" ph="..." />
-                <marker date="1553744416641" expanded="true" signature="5385:5391" ph="..." />
-                <marker date="1553744416641" expanded="true" signature="5430:5573" ph="..." />
+                <marker date="1553744464140" expanded="true" signature="3163:3168" ph="..." />
+                <marker date="1553744464140" expanded="true" signature="3379:3388" ph="..." />
+                <marker date="1553744464140" expanded="true" signature="4210:4215" ph="..." />
+                <marker date="1553744464140" expanded="true" signature="5385:5391" ph="..." />
+                <marker date="1553744464140" expanded="true" signature="5430:5573" ph="..." />
               </folding>
             </state>
           </provider>
@@ -239,15 +239,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/onewordstory/onewordstory.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="267" column="30" selection-start-line="267" selection-start-column="30" selection-end-line="267" selection-end-column="30" />
+        <state relative-caret-position="215">
+          <caret line="229" column="27" selection-start-line="229" selection-start-column="27" selection-end-line="229" selection-end-column="27" />
           <folding>
             <element signature="e#11#25#0" expanded="true" />
-            <marker date="1553744416641" expanded="true" signature="3163:3168" ph="..." />
-            <marker date="1553744416641" expanded="true" signature="3379:3388" ph="..." />
-            <marker date="1553744416641" expanded="true" signature="4210:4215" ph="..." />
-            <marker date="1553744416641" expanded="true" signature="5385:5391" ph="..." />
-            <marker date="1553744416641" expanded="true" signature="5430:5573" ph="..." />
+            <marker date="1553744464140" expanded="true" signature="3163:3168" ph="..." />
+            <marker date="1553744464140" expanded="true" signature="3379:3388" ph="..." />
+            <marker date="1553744464140" expanded="true" signature="4210:4215" ph="..." />
+            <marker date="1553744464140" expanded="true" signature="5385:5391" ph="..." />
+            <marker date="1553744464140" expanded="true" signature="5430:5573" ph="..." />
           </folding>
         </state>
       </provider>

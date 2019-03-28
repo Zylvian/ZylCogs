@@ -228,7 +228,6 @@ class OneWordStory(commands.Cog):
             return message.author != self.bot.user and message.channel.id == ctx.channel.id
         
         join_users = list()
-        global join_users
         begin = datetime.datetime.now()
         current = begin
         # The time before it starts.
