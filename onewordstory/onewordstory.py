@@ -403,7 +403,7 @@ class OneWordStory(commands.Cog):
                     # Any other people typing
                     else:
                         print("we in here")
-                        (join_users, join_bool) = await self.join_user_add(ctx, message, pick_users)
+                        (join_users, join_bool) = await self.join_user_add(ctx, message, join_users)
                         print("we ain't here")
                         timeout_value += user_time_add
                     
