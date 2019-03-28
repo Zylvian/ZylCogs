@@ -349,16 +349,15 @@ class OneWordStory(commands.Cog):
         cd_users = list()
         maxwordcount = await self.config.guild(ctx.guild).get_raw('Max_words')
         wordcount = 0
+        wordlength = 22
 
         while True:
             
             # Picks a random user that's not "on cooldown", and if there are no available users, resets the "cooldown" of all the users.
             try:
-                
-                wordlength = 22
+
                 # Picks a random user.
-                tempuser = None
-                while(True):
+                while True:
                     try:
                         tempuser = random.choice(pick_users)
                         cd_users.append(tempuser)
@@ -414,8 +413,4 @@ class OneWordStory(commands.Cog):
 
                 else:
                     await ctx.send("Time out! Next user!")
-                    #cd_users.append(tempuser)
-                    """if usercheck(message):
-                        cd_users.append(message.author)"""
-
     
