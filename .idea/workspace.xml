@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="276f89b1-2f8f-490b-85cf-65e9a5431488" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onewordstory/onewordstory.py" beforeDir="false" afterPath="$PROJECT_DIR$/onewordstory/onewordstory.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,13 +21,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="json" value="12" />
-          <entry key="py" value="1795" />
+          <entry key="py" value="1800" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="12" />
-          <entry key="Python" value="1795" />
+          <entry key="Python" value="1800" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -57,15 +56,15 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/onewordstory/onewordstory.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="251" column="41" selection-start-line="251" selection-start-column="41" selection-end-line="251" selection-end-column="41" />
+            <state relative-caret-position="400">
+              <caret line="275" column="88" selection-start-line="275" selection-start-column="88" selection-end-line="275" selection-end-column="88" />
               <folding>
                 <element signature="e#11#25#0" expanded="true" />
-                <marker date="1553742746233" expanded="true" signature="3163:3168" ph="..." />
-                <marker date="1553742746233" expanded="true" signature="3379:3388" ph="..." />
-                <marker date="1553742746233" expanded="true" signature="4203:4208" ph="..." />
-                <marker date="1553742746233" expanded="true" signature="5378:5384" ph="..." />
-                <marker date="1553742746233" expanded="true" signature="5423:5566" ph="..." />
+                <marker date="1553743054254" expanded="true" signature="3163:3168" ph="..." />
+                <marker date="1553743054254" expanded="true" signature="3379:3388" ph="..." />
+                <marker date="1553743054254" expanded="true" signature="4203:4208" ph="..." />
+                <marker date="1553743054254" expanded="true" signature="5378:5384" ph="..." />
+                <marker date="1553743054254" expanded="true" signature="5423:5566" ph="..." />
               </folding>
             </state>
           </provider>
@@ -238,15 +237,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/onewordstory/onewordstory.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="251" column="41" selection-start-line="251" selection-start-column="41" selection-end-line="251" selection-end-column="41" />
+        <state relative-caret-position="400">
+          <caret line="275" column="88" selection-start-line="275" selection-start-column="88" selection-end-line="275" selection-end-column="88" />
           <folding>
             <element signature="e#11#25#0" expanded="true" />
-            <marker date="1553742746233" expanded="true" signature="3163:3168" ph="..." />
-            <marker date="1553742746233" expanded="true" signature="3379:3388" ph="..." />
-            <marker date="1553742746233" expanded="true" signature="4203:4208" ph="..." />
-            <marker date="1553742746233" expanded="true" signature="5378:5384" ph="..." />
-            <marker date="1553742746233" expanded="true" signature="5423:5566" ph="..." />
+            <marker date="1553743054254" expanded="true" signature="3163:3168" ph="..." />
+            <marker date="1553743054254" expanded="true" signature="3379:3388" ph="..." />
+            <marker date="1553743054254" expanded="true" signature="4203:4208" ph="..." />
+            <marker date="1553743054254" expanded="true" signature="5378:5384" ph="..." />
+            <marker date="1553743054254" expanded="true" signature="5423:5566" ph="..." />
           </folding>
         </state>
       </provider>

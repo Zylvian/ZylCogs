@@ -248,7 +248,7 @@ class OneWordStory(commands.Cog):
                                               )
                 (join_users, join_bool) = await self.join_user_add(ctx, message, join_users)
                 if join_bool:
-                    bonus_round_time += user_time_add * len(join_users)
+                    bonus_round_time += user_time_add
                     await ctx.send("+{} 🕒 total seconds have been added to the game clock!".format(bonus_round_time))
                 
                 # await message.delete()
@@ -273,7 +273,7 @@ class OneWordStory(commands.Cog):
         
         # Takes user input on a cycle.
         ## INPUT PLACE
-        start_line = await self.take_input(ctx, join_users, start_line)
+        start_line = await self.take_input(ctx, join_users, start_line, bonus_round_time)
 
         start_line += "."
         # A string with all the user's nicks.
