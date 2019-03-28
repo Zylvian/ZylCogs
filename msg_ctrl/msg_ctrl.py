@@ -50,6 +50,7 @@ class Msg_Ctrl(commands.Cog):
 
             choice = await self.get_int_choice(ctx, "What do you want to do?\n1. List all image only channels.\n2. Add a new image only channel.")
         
+            # Adds a new channel
             if choice == 2:
                 choice = await self.get_int_choice(ctx, "This or another channel?\n1. This.\n2. Another.")
 
@@ -62,6 +63,7 @@ class Msg_Ctrl(commands.Cog):
                                                     ,check=channelcheck)
                     await self.add_img_only_channel(ctx, choice.channel_mentions[0])
 
+            # Lists image only channel
             elif choice == 1:
                 async with self.database.guild(ctx.guild).Only_Image_Channels() as only_image_channels:
                     await ctx.send(only_image_channels)
