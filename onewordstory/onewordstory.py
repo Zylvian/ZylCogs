@@ -237,6 +237,7 @@ class OneWordStory(commands.Cog):
         delmsgs = []
         delmsgs.append(start_msg)
 
+        global user_time_add
         user_time_add = await self.config.guild(ctx.guild).get_raw('User_time_add')
 
         # Adds users who type "ows" into a list.
@@ -339,6 +340,7 @@ class OneWordStory(commands.Cog):
         current = begin
         # COOLDOWN TIMEOUT WHATEVER
         timeout_value = await self.config.guild(ctx.guild).get_raw('Round_time')
+        timeout_value += bonus_round_time
         # Adds time to the clock when users join.
         user_time_add = await self.config.guild(ctx.guild).get_raw('User_time_add')
 
@@ -362,11 +364,9 @@ class OneWordStory(commands.Cog):
                         cd_users.append(tempuser)
                         pick_users.remove(tempuser)
                         break
-                    
                     except IndexError:
                         pick_users = join_users.copy()
                         cd_users = list()
-                        tempuser = random.choice(pick_users)
                    
                 current = datetime.datetime.now()
                 current=(timeout_value - (current-begin).seconds)
@@ -400,6 +400,7 @@ class OneWordStory(commands.Cog):
                     # Any other people typing
                     else:
                         (join_users, join_bool) = await self.join_user_add(ctx, message, pick_users)
+                        timeout_value += user_time_add
                     
             # Either stops the game or goes to the next user.
             except asyncio.TimeoutError:
