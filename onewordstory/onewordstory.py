@@ -264,7 +264,7 @@ class OneWordStory(commands.Cog):
             # return random.randint(30, 120)
             
         # Let the One WOrd Story start!
-        start_line, join_users = random.choice(startup_lines)
+        start_line = random.choice(startup_lines)
         await ctx.send("Alright, lets begin! I'll go first: \n**{}**".format(start_line))
         await asyncio.sleep(3)
         start_line = start_line.strip(".")
@@ -272,7 +272,7 @@ class OneWordStory(commands.Cog):
         
         # Takes user input on a cycle.
         ## INPUT PLACE
-        start_line = await self.take_input(ctx, join_users, start_line, bonus_round_time)
+        start_line, join_users  = await self.take_input(ctx, join_users, start_line, bonus_round_time)
 
         start_line += "."
         # A string with all the user's nicks.
