@@ -272,12 +272,12 @@ class OneWordStory(commands.Cog):
         
         # Takes user input on a cycle.
         ## INPUT PLACE
-        start_line, join_users  = await self.take_input(ctx, join_users, start_line, bonus_round_time)
+        start_line, end_users  = await self.take_input(ctx, join_users, start_line, bonus_round_time)
 
         start_line += "."
         # A string with all the user's nicks.
         users_string = "**Creators**: "
-        for user in join_users:
+        for user in end_users:
             users_string += user.display_name + ", "
 
         # Removes last two words.
@@ -309,7 +309,7 @@ class OneWordStory(commands.Cog):
         # Saves the newest OWS.
         embed_dict = embed.to_dict()
 
-        await self.save_ows_embed(ctx, join_users, embed_dict, counter, game_name)
+        await self.save_ows_embed(ctx, end_users, embed_dict, counter, game_name)
         newdelmsg = await ctx.send("Round finished!")
         delmsgs.append(newdelmsg)
         return 1, delmsgs
@@ -364,7 +364,7 @@ class OneWordStory(commands.Cog):
                         break
                     
                     except IndexError:
-                        pick_users = cd_users
+                        pick_users = join_users.copy()
                         cd_users = list()
                         tempuser = random.choice(pick_users)
                    
@@ -399,7 +399,7 @@ class OneWordStory(commands.Cog):
                             await ctx.send("Only one word!")
                     # Any other people typing
                     else:
-                        (pick_users, join_bool) = await self.join_user_add(ctx, message, pick_users)
+                        (join_users, join_bool) = await self.join_user_add(ctx, message, pick_users)
                     
             # Either stops the game or goes to the next user.
             except asyncio.TimeoutError:
