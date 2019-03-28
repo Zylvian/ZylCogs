@@ -129,7 +129,7 @@ class OneWordStory(commands.Cog):
                     #add_index = default_json_categories.index(add_category)
                     async with self.gconf.Startup_lines() as startup_lines:
                         startup_lines.append(add_category)
-                        await ctx.send("Category added!")
+                        return await ctx.send("Category added!")
                 except IndexError:
                     return await ctx.send("Incorrect number!")
         except asyncio.TimeoutError:
@@ -401,7 +401,7 @@ class OneWordStory(commands.Cog):
                             await ctx.send("Only one word!")
                     # Any other people typing
                     else:
-                        (join_users, join_bool) = self.join_user_add(ctx, message, join_users)
+                        (join_users, join_bool) = await self.join_user_add(ctx, message, join_users)
                     
             # Either stops the game or goes to the next user.
             except asyncio.TimeoutError:
