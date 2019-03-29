@@ -61,8 +61,8 @@ class OneWordStory(commands.Cog):
      
         ows_defaults = {'Cooldown': 3600,
                             'Counter': 0,
-                            'Round_time': 100, # CHANGE ME to 100
-                            'Start_time': 60, # Change me to 60
+                            'Round_time': 3, # CHANGE ME to 100
+                            'Start_time': 5, # Change me to 60
                             'Answer_time': 14,
                             'Max_words': 40,
                             'User_time_add': 10,
@@ -121,8 +121,8 @@ class OneWordStory(commands.Cog):
         if number_choice < 1:
             return await ctx.send("It has to be larger than 0!")
         else:
-            await self.gconf.Word_count.set(wordcount)
-            return await ctx.send("Word count set!")
+            await self.gconf.Word_count.set(number_choice)
+            return await ctx.send("Word count set to **{}**!".format(number_choice))
 
 
     async def get_default_lines(self, ctx):
@@ -309,7 +309,7 @@ That aren't even in time""")
             
         # Let the One WOrd Story start!
         start_line = random.choice(startup_lines)
-        await ctx.send("Alright, lets begin! The number of words per user is {} I'll go first: \n**{}**".format(await self.gconf.Word_count() ,start_line))
+        await ctx.send("Alright, lets begin! The number of words per user is **{}**! \nI'll go first: \n**{}**".format(await self.gconf.Word_count(), start_line))
         await asyncio.sleep(3)
         start_line = start_line.strip(".")
         
@@ -427,7 +427,11 @@ That aren't even in time""")
                                                         
                     if(message.author is tempuser):
                         content = message.content
+                        print(content)
                         content_word_list = content.split()
+                        print(content_word_list)
+                        print(max_words_allowed)
+                        print(len(content_word_list))
                         if not len(content_word_list) > max_words_allowed:
                             # Checks all words.
                             words_addition = list()
@@ -435,17 +439,17 @@ That aren't even in time""")
                                 if len(content) <= wordlength:
                                     if (word in ".,?!;:") and i > 1:
                                         words_addition[i] += word
-                                        break
                                     else:
                                         word.strip(' ') # Needed, maybe?
                                         words_addition.append(word)
-                                    wordcount += 1
+                                        wordcount += 1
                                 
                                 else:
                                     await ctx.send("Word too long!")
-                                    break
 
                             start_line += " " + " ".join(words_addition)
+                            print(start_line)
+                            break
 
                         else:
                             s_string = ""
