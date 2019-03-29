@@ -406,7 +406,7 @@ That aren't even in time""")
         wordcount = 0 # To be used as an additional display of information.
         wordlength = 22
 
-        nr_goodbyes_required = int(math.floor(len(join_users))/2+1)
+        nr_goodbyes_required = int(math.floor(len(join_users))/3+1)
 
 
         while True:
@@ -430,8 +430,8 @@ That aren't even in time""")
                 maybe_s_string = ""
                 if max_words_allowed > 1:
                     maybe_s_string = "s"
-                wordmsg = await ctx.send("*{start_line}*...\nAlright {user_mention}, give me {max_words_allowed} word{maybe_s_string}! *{current} seconds remaining...*"
-                                         .format(start_line=start_line, max_words_allowed=max_words_allowed, user_mention=tempuser.mention, current=current))
+                wordmsg = await ctx.send(f"*{start_line}*...\nAlright {tempuser.mention}, give me {max_words_allowed} word{maybe_s_string}! *{current} seconds remaining...*"
+                                         #.format(start_line=start_line, max_words_allowed=max_words_allowed, user_mention=tempuser.mention, current=current, maybe_s_string=maybe_s_string))
                 
                 
                 # User timer is a set number, but if the overall cooldown is below the user timer, then that is the new timeout value.
