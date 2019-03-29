@@ -226,10 +226,11 @@ That aren't even in time""")
  
     @ows.command()
     async def start(self, ctx):
+        """Starts a game of One Word Story!"""
         self.tasks.append(self.bot.loop.create_task(self.start_cont(ctx)))
 
     async def start_cont(self, ctx):
-        """Starts a game of One Word Story!"""
+
 
         """ows_values = {
                     "Games":{
@@ -309,7 +310,7 @@ That aren't even in time""")
             
         # Let the One WOrd Story start!
         start_line = random.choice(startup_lines)
-        await ctx.send("Alright, lets begin! The number of words per user is **{}**! \nI'll go first: \n**{}**".format(await self.gconf.Word_count(), start_line))
+        await ctx.send("Alright, lets begin! The number of words per message is **{}**! \nI'll go first: \n**{}**".format(await self.gconf.Word_count(), start_line))
         await asyncio.sleep(3)
         start_line = start_line.strip(".")
         
@@ -390,10 +391,11 @@ That aren't even in time""")
         user_time_add = await self.config.guild(ctx.guild).get_raw('User_time_add')
 
         user_cd = await self.config.guild(ctx.guild).get_raw('Answer_time')
+        max_words_allowed = await self.gconf.Word_count()
+        user_cd += 3*max_words_allowed
         pick_users = join_users.copy()
         cd_users = list()
         maxwordcount = await self.config.guild(ctx.guild).get_raw('Max_words')
-        max_words_allowed = await self.gconf.Word_count()
         wordcount = 0 # To be used as an additional display of information.
         wordlength = 22
 
@@ -437,8 +439,12 @@ That aren't even in time""")
                             words_addition = list()
                             for i, word in enumerate(content_word_list):
                                 if len(content) <= wordlength:
-                                    if (word in ".,?!;:") and i > 1:
-                                        words_addition[i] += word
+                                    if (word in ".,?!;:")
+                                        if i == 0:
+                                            start_line.rstrip()
+                                            start_line += word
+                                        else:
+                                            words_addition[i] += word
                                     else:
                                         word.strip(' ') # Needed, maybe?
                                         words_addition.append(word)
