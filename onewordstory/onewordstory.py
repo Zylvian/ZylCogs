@@ -129,9 +129,9 @@ class OneWordStory(commands.Cog):
         filepath = self.path / 'default_lines.json'
         with open(filepath) as json_file:
             return(json.load(json_file))
-            
+
     @commands.command()
-    async def islilhatastinkydoodoohead(self, ctx):
+    async def is_lil_hat_a_stinky_doodoo_head(self, ctx):
         await ctx.send("Yes")
 
     @commands.command()
@@ -309,7 +309,7 @@ That aren't even in time""")
             
         # Let the One WOrd Story start!
         start_line = random.choice(startup_lines)
-        await ctx.send("Alright, lets begin! I'll go first: \n**{}**".format(start_line))
+        await ctx.send("Alright, lets begin! The number of words per user is {} I'll go first: \n**{}**".format(await self.gconf.Word_count() ,start_line))
         await asyncio.sleep(3)
         start_line = start_line.strip(".")
         
@@ -393,7 +393,6 @@ That aren't even in time""")
         pick_users = join_users.copy()
         cd_users = list()
         maxwordcount = await self.config.guild(ctx.guild).get_raw('Max_words')
-        max_words_allowed = await self.config.guild(ctx.guild).get_raw('Word_count')
         max_words_allowed = await self.gconf.Word_count()
         wordcount = 0 # To be used as an additional display of information.
         wordlength = 22
@@ -431,22 +430,22 @@ That aren't even in time""")
                         content_word_list = content.split()
                         if not len(content_word_list) > max_words_allowed:
                             # Checks all words.
-                            words_addition = ""
+                            words_addition = list()
                             for i, word in enumerate(content_word_list):
                                 if len(content) <= wordlength:
-                                    if (word == "." or "," or "?") and i > 1:
-                                        words_addition.rstrip()
-
-                                    word.strip(' ') # Needed, maybe?
-                                    words_addition += word
+                                    if (word in ".,?!;:") and i > 1:
+                                        words_addition[i] += word
+                                        break
+                                    else:
+                                        word.strip(' ') # Needed, maybe?
+                                        words_addition.append(word)
                                     wordcount += 1
-                                    break
                                 
                                 else:
                                     await ctx.send("Word too long!")
                                     break
 
-                            start_line += " " + words_addition
+                            start_line += " " + " ".join(words_addition)
 
                         else:
                             s_string = ""
