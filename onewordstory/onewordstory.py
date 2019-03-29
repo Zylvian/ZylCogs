@@ -68,6 +68,7 @@ class OneWordStory(commands.Cog):
                             'User_time_add': 10,
                             'Gallery_channel_id': None,
                             'Startup_lines':['General'],
+                            'Word_count': 1
                             }
                             
         # If releasing, make sure to change the channel ID. Can be an available command with e.g set_channel
@@ -109,7 +110,7 @@ class OneWordStory(commands.Cog):
             
     @lines.command()
     async def add(self,ctx):
-        self.add_or_rem(ctx, True)
+        await self.add_or_rem(ctx, True)
         """self.gconf = self.config.guild(ctx.guild)
 
         current_categories = await self.gconf.Startup_lines()
@@ -170,13 +171,26 @@ class OneWordStory(commands.Cog):
         except asyncio.TimeoutError:
             await ctx.send("Timed out!")"""
 
+    @settings.command()
+    async def wordcount(self, ctx):
+        self.gconf = self.config.guild(ctx.guild)
+        async with self.gconf.Word_count() as wordcount:
+            await ctx.send("The current amount of allowed words are **{}**.\nWhat do you wish to set it to?".format(wordcount))
+            pred = MessagePredicate.valid_int(ctx)
+            await ctx.bot.wait_for('message', timeout=7, check=pred)
+            number_choice = pred.result  # Minus one due to 0-indexed
+            if number_choice < 1:
+                return await ctx.send("It has to be larger than 0!")
+            else:
+                wordcount = number_choice
+
 
     async def get_default_lines(self, ctx):
         filepath = self.path / 'default_lines.json'
         with open(filepath) as json_file:
             return(json.load(json_file))
 
-    async def add_or_rem(self, ctx, add_or_rem_bool:bool):
+    async def add_or_rem(self, ctx, add_or_rem_bool: bool):
         self.gconf = self.config.guild(ctx.guild)
         current_categories = await self.gconf.Startup_lines()
         list_string = ""
@@ -396,7 +410,7 @@ class OneWordStory(commands.Cog):
         pick_users = join_users.copy()
         cd_users = list()
         maxwordcount = await self.config.guild(ctx.guild).get_raw('Max_words')
-        wordcount = 0
+        wordcount = await self.config.guild(ctx.guild).get_raw('Word_count')
         wordlength = 22
 
         while True:
@@ -429,7 +443,7 @@ class OneWordStory(commands.Cog):
                                                         
                     if(message.author is tempuser):
                         content = message.content
-                        if not len(content.split())>1:
+                        if not len(content.split())>wordcount:
                             if len(content) <= wordlength:
                                 content.strip(' ')
                                 start_line += " " + content
@@ -439,7 +453,10 @@ class OneWordStory(commands.Cog):
                             else:
                                 await ctx.send("Word too long!")
                         else:
-                            await ctx.send("Only one word!")
+                            s_string = ""
+                            if wordcount > 1:
+                                s_string = "s"
+                            await ctx.send("Max {} word{} allowed!".format(wordcount, s_string))
                     # Any other people typing
                     else:
                         (join_users, join_bool) = await self.join_user_add(ctx, message, join_users)
