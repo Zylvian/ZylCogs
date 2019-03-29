@@ -107,7 +107,14 @@ class OneWordStory(commands.Cog):
         async with self.config.guild(ctx.guild).Counter() as counter:
             counter = 0
             await ctx.send("Counter reset to " + counter)
-            
+
+    @ows.command()
+    async def rules(self, ctx):
+        """How this game works!"""
+        await ctx.send("**One Word Story!** *(well, depends)*\n"
+                       "When it's your turn, write continue the story! \n"
+                       "Type **Goodbye!** whenever to vote for ending the story before the timer is up!"
+                       "*(The timer resets for each new word added.)* ")
 
 
     @settings.command()
@@ -399,7 +406,7 @@ That aren't even in time""")
         wordcount = 0 # To be used as an additional display of information.
         wordlength = 22
 
-        nr_goodbyes_required = math.floor(len(join_users))/2+1
+        nr_goodbyes_required = int(math.floor(len(join_users))/2+1)
 
 
         while True:
@@ -420,7 +427,11 @@ That aren't even in time""")
                 current=(timeout_value - (current-begin).seconds)
 
                 # START OF WORD-ADDING
-                wordmsg = await ctx.send("*{}*...\nAlright {}, give me a word! *{} seconds remaining...*".format(start_line, tempuser.mention, current))
+                maybe_s_string = ""
+                if max_words_allowed > 1:
+                    maybe_s_string = "s"
+                wordmsg = await ctx.send("*{start_line}*...\nAlright {user_mention}, give me {max_words_allowed} word{maybe_s_string}! *{current} seconds remaining...*"
+                                         .format(start_line=start_line, max_words_allowed=max_words_allowed, user_mention=tempuser.mention, current=current))
                 
                 
                 # User timer is a set number, but if the overall cooldown is below the user timer, then that is the new timeout value.
@@ -468,10 +479,7 @@ That aren't even in time""")
                             break
 
                         else:
-                            s_string = ""
-                            if max_words_allowed > 1:
-                                s_string = "s"
-                            await ctx.send("Max {} word{} allowed!".format(max_words_allowed, s_string))
+                            await ctx.send("Max {} word{} allowed!".format(max_words_allowed, maybe_s_string))
                     # Any other people typing
                     else:
                         (join_users, join_bool) = await self.join_user_add(ctx, message, join_users)
