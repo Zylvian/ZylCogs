@@ -109,8 +109,8 @@ class OneWordStory(commands.Cog):
             
     @lines.command()
     async def add(self,ctx):
-
-        self.gconf = self.config.guild(ctx.guild)
+        self.add_or_rem(ctx, True)
+        """self.gconf = self.config.guild(ctx.guild)
 
         current_categories = await self.gconf.Startup_lines()
         default_json_lines_dict = await self.get_default_lines(ctx)
@@ -139,13 +139,14 @@ class OneWordStory(commands.Cog):
                 except IndexError:
                     return await ctx.send("Incorrect number!")
         except asyncio.TimeoutError:
-            await ctx.send("Timed out!")
+            await ctx.send("Timed out!") """
 
 
 
     @lines.command()
     async def rem(self, ctx):
-        self.gconf = self.config.guild(ctx.guild)
+        await self.add_or_rem(ctx, False)
+        """ self.gconf = self.config.guild(ctx.guild)
         current_categories = await self.gconf.Startup_lines()
         list_string = ""
         for i, item in enumerate(current_categories):
@@ -167,7 +168,7 @@ class OneWordStory(commands.Cog):
                 except IndexError:
                     await ctx.send("Incorrect number!")
         except asyncio.TimeoutError:
-            await ctx.send("Timed out!")
+            await ctx.send("Timed out!")"""
 
 
     async def get_default_lines(self, ctx):
@@ -175,7 +176,42 @@ class OneWordStory(commands.Cog):
         with open(filepath) as json_file:
             return(json.load(json_file))
 
+    async def add_or_rem(self, ctx, add_or_rem_bool:bool):
+        self.gconf = self.config.guild(ctx.guild)
+        current_categories = await self.gconf.Startup_lines()
+        list_string = ""
+        for i, item in enumerate(current_categories):
+            list_string += "\n**{}**. {}".format(i + 1, item)
 
+        message_str = ("**Current startup lines**: {}\n".format(list_string))
+
+        if not add_or_rem_bool:
+            message_str += "*Which one do you want to remove?*"
+        else:
+            message_str += ("**All available**: {}\n*Which one do you want to add?*".format(list_string))
+
+        await ctx.send("**Current startup lines**: {} \n*Which one do you want to remove?*"
+                       .format(list_string))
+
+        try:
+            while True:
+                pred = MessagePredicate.valid_int(ctx)
+                await ctx.bot.wait_for('message', timeout=7, check=pred)
+                number_choice = pred.result - 1  # Minus one due to 0-indexed
+                try:
+                    choice_category = current_categories[number_choice]
+                    # add_index = default_json_categories.index(add_category)
+                    async with self.gconf.Startup_lines() as startup_lines:
+                        if add_or_rem_bool:
+                            startup_lines.append(choice_category)
+                            return await ctx.send("Category added!")
+                        else:
+                            startup_lines.remove(choice_category)
+                            return await ctx.send("Category removed!")
+                except IndexError:
+                    await ctx.send("Incorrect number!")
+        except asyncio.TimeoutError:
+            await ctx.send("Timed out!")
 
     @gallery.command()
     async def set_channel(self, ctx):
