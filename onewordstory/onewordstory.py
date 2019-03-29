@@ -406,13 +406,13 @@ That aren't even in time""")
         wordcount = 0 # To be used as an additional display of information.
         wordlength = 22
 
-        nr_goodbyes_required = int(math.floor(len(join_users))/3+1)
-
 
         while True:
             
             # Picks a random user that's not "on cooldown", and if there are no available users, resets the "cooldown" of all the users.
             try:
+                # Here in case more users join
+                nr_goodbyes_required = (int(math.floor(len(join_users)) / 2)) + 1
                 # Reset goodbyes
                 curr_goodbyes = 0
 
