@@ -211,11 +211,11 @@ class OneWordStory(commands.Cog):
             available_categories = [category for category in default_json_categories if category not in current_categories]
             pick_category_list_string = format_category_list(available_categories)
 
-            message_str += ("{}\n **All available**: {}\n*Which one do you want to add?*".format(humanize_list(current_categories),available_categories))
+            message_str += ("{}\n **All available**: {}\n*Which one do you want to add?*".format(humanize_list(current_categories),pick_category_list_string))
 
         else:
             pick_category_list_string = format_category_list(current_categories)
-            message_str += "\n{}*Which one do you want to remove?*".format()
+            message_str += "\n{}*Which one do you want to remove?*".format(pick_category_list_string)
 
 
 
