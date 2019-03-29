@@ -399,10 +399,15 @@ That aren't even in time""")
         wordcount = 0 # To be used as an additional display of information.
         wordlength = 22
 
+        nr_goodbyes_required = math.floor(len(join_users))/2+1
+
+
         while True:
             
             # Picks a random user that's not "on cooldown", and if there are no available users, resets the "cooldown" of all the users.
             try:
+                # Reset goodbyes
+                curr_goodbyes = 0
 
                 # Picks a random user.
                 if not pick_users:
@@ -426,11 +431,18 @@ That aren't even in time""")
                 while True:
                     message = await self.bot.wait_for('message',
                                                   timeout=user_cd, check=usercheck)
-                                                        
-                    if(message.author is tempuser):
-                        content = message.content
-                        if content.lower() == "goodbye.":
+
+                    content = message.content
+
+                    if content.lower() == "goodbye.":
+                        curr_goodbyes += 1
+                        await ctx.send("**{}**/**{}** goodbyes!".format(curr_goodbyes, nr_goodbyes_required))
+                        if curr_goodbyes >= nr_goodbyes_required:
                             return start_line, join_users
+
+                    elif(message.author is tempuser):
+                        content = message.content
+
                         content_word_list = content.split()
                         if not len(content_word_list) > max_words_allowed:
                             # Checks all words.
