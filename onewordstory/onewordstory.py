@@ -192,21 +192,32 @@ class OneWordStory(commands.Cog):
             return(json.load(json_file))
 
     async def add_or_rem(self, ctx, add_or_rem_bool: bool):
+
+        def format_category_list(category_list):
+            return_string = ""
+            for i, item in enumerate(category_list):
+                return_string += "\n**{}**. {}".format(i + 1, item)
+            return return_string
+
         self.gconf = self.config.guild(ctx.guild)
         current_categories = await self.gconf.Startup_lines()
-        list_string = ""
-        for i, item in enumerate(current_categories):
-            list_string += "\n**{}**. {}".format(i + 1, item)
 
-        message_str = ("**Current startup lines**: {}\n".format(list_string))
+        # Gets available lines.
+        default_json_lines_dict = await self.get_default_lines(ctx)
+        message_str = ("**Current startup lines**:")
 
-        if not add_or_rem_bool:
-            message_str += "*Which one do you want to remove?*"
+        if add_or_rem_bool:
+            default_json_categories = list(default_json_lines_dict["Startup_lines"])
+            available_categories = [category for category in default_json_categories if category not in current_categories]
+            pick_category_list_string = format_category_list(available_categories)
+
+            message_str += ("{}\n **All available**: {}\n*Which one do you want to add?*".format(humanize_list(current_categories),available_categories))
+
         else:
-            message_str += ("**All available**: {}\n*Which one do you want to add?*".format(list_string))
+            pick_category_list_string = format_category_list(current_categories)
+            message_str += "\n{}*Which one do you want to remove?*".format()
 
-        await ctx.send("**Current startup lines**: {} \n*Which one do you want to remove?*"
-                       .format(list_string))
+
 
         try:
             while True:
@@ -214,14 +225,16 @@ class OneWordStory(commands.Cog):
                 await ctx.bot.wait_for('message', timeout=7, check=pred)
                 number_choice = pred.result - 1  # Minus one due to 0-indexed
                 try:
-                    choice_category = current_categories[number_choice]
+
                     # add_index = default_json_categories.index(add_category)
                     async with self.gconf.Startup_lines() as startup_lines:
                         if add_or_rem_bool:
-                            startup_lines.append(choice_category)
+                            add_category = available_categories[number_choice]
+                            startup_lines.append(add_category)
                             return await ctx.send("Category added!")
                         else:
-                            startup_lines.remove(choice_category)
+                            rem_category = current_categories[number_choice]
+                            startup_lines.remove(rem_category)
                             return await ctx.send("Category removed!")
                 except IndexError:
                     await ctx.send("Incorrect number!")
@@ -411,7 +424,9 @@ class OneWordStory(commands.Cog):
         pick_users = join_users.copy()
         cd_users = list()
         maxwordcount = await self.config.guild(ctx.guild).get_raw('Max_words')
-        wordcount = await self.config.guild(ctx.guild).get_raw('Word_count')
+        max_words_allowed = await self.config.guild(ctx.guild).get_raw('Word_count')
+        max_words_allowed = await self.gconf.Word_count()
+        wordcount = 0 # To be used as an additional display of information.
         wordlength = 22
 
         while True:
@@ -444,20 +459,31 @@ class OneWordStory(commands.Cog):
                                                         
                     if(message.author is tempuser):
                         content = message.content
-                        if not len(content.split())>wordcount:
-                            if len(content) <= wordlength:
-                                content.strip(' ')
-                                start_line += " " + content
-                                wordcount += 1
-                                break
+                        content_word_list = content.split()
+                        if not len(content_word_list) > max_words_allowed:
+                            # Checks all words.
+                            words_addition = ""
+                            for i, word in enumerate(content_word_list):
+                                if len(content) <= wordlength:
+                                    if (word == "." or "," or "?") and i > 1:
+                                        words_addition.rstrip()
+
+                                    word.strip(' ') # Needed, maybe?
+                                    words_addition += word
+                                    wordcount += 1
+                                    break
                                 
-                            else:
-                                await ctx.send("Word too long!")
+                                else:
+                                    await ctx.send("Word too long!")
+                                    break
+
+                            start_line += " " + words_addition
+
                         else:
                             s_string = ""
-                            if wordcount > 1:
+                            if max_words_allowed > 1:
                                 s_string = "s"
-                            await ctx.send("Max {} word{} allowed!".format(wordcount, s_string))
+                            await ctx.send("Max {} word{} allowed!".format(max_words_allowed, s_string))
                     # Any other people typing
                     else:
                         (join_users, join_bool) = await self.join_user_add(ctx, message, join_users)
