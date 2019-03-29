@@ -217,6 +217,8 @@ class OneWordStory(commands.Cog):
             pick_category_list_string = format_category_list(current_categories)
             message_str += "\n{}*Which one do you want to remove?*".format(pick_category_list_string)
 
+        
+        await ctx.send(message_str)
 
 
         try:
