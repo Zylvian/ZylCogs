@@ -429,11 +429,9 @@ That aren't even in time""")
                                                         
                     if(message.author is tempuser):
                         content = message.content
-                        print(content)
+                        if content.lower() == "goodbye.":
+                            return start_line, join_users
                         content_word_list = content.split()
-                        print(content_word_list)
-                        print(max_words_allowed)
-                        print(len(content_word_list))
                         if not len(content_word_list) > max_words_allowed:
                             # Checks all words.
                             words_addition = list()
