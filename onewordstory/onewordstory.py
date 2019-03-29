@@ -174,15 +174,16 @@ class OneWordStory(commands.Cog):
     @settings.command()
     async def wordcount(self, ctx):
         self.gconf = self.config.guild(ctx.guild)
-        async with self.gconf.Word_count() as wordcount:
-            await ctx.send("The current amount of allowed words are **{}**.\nWhat do you wish to set it to?".format(wordcount))
-            pred = MessagePredicate.valid_int(ctx)
-            await ctx.bot.wait_for('message', timeout=7, check=pred)
-            number_choice = pred.result  # Minus one due to 0-indexed
-            if number_choice < 1:
-                return await ctx.send("It has to be larger than 0!")
-            else:
-                wordcount = number_choice
+        wordcount = await self.gconf.Word_count()
+        await ctx.send("The current amount of allowed words are **{}**.\nWhat do you wish to set it to?".format(wordcount))
+        pred = MessagePredicate.valid_int(ctx)
+        await ctx.bot.wait_for('message', timeout=7, check=pred)
+        number_choice = pred.result  # Minus one due to 0-indexed
+        if number_choice < 1:
+            return await ctx.send("It has to be larger than 0!")
+        else:
+            await self.gconf.Word_count.set(wordcount)
+            return await ctx.send("Word count set!")
 
 
     async def get_default_lines(self, ctx):
