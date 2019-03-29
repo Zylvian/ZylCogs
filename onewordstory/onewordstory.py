@@ -108,68 +108,7 @@ class OneWordStory(commands.Cog):
             counter = 0
             await ctx.send("Counter reset to " + counter)
             
-    @lines.command()
-    async def add(self,ctx):
-        await self.add_or_rem(ctx, True)
-        """self.gconf = self.config.guild(ctx.guild)
 
-        current_categories = await self.gconf.Startup_lines()
-        default_json_lines_dict = await self.get_default_lines(ctx)
-        default_json_categories = list(default_json_lines_dict["Startup_lines"])
-
-
-        available_list = [category for category in default_json_categories if category not in current_categories]
-        list_string = ""
-        for i, item in enumerate(available_list):
-            list_string += "\n**{}**. {}".format(i+1, item)
-        await ctx.send("**Current startup lines**: {} \n**All available**: {}\n*Which one do you want to add?*"
-                       .format(humanize_list(current_categories),
-                       list_string))
-
-        try:
-            while True:
-                pred = MessagePredicate.valid_int(ctx)
-                await ctx.bot.wait_for('message',timeout=7,check=pred)
-                number_choice = pred.result-1 # Minus one due to 0-indexed
-                try:
-                    add_category = available_list[number_choice]
-                    #add_index = default_json_categories.index(add_category)
-                    async with self.gconf.Startup_lines() as startup_lines:
-                        startup_lines.append(add_category)
-                        return await ctx.send("Category added!")
-                except IndexError:
-                    return await ctx.send("Incorrect number!")
-        except asyncio.TimeoutError:
-            await ctx.send("Timed out!") """
-
-
-
-    @lines.command()
-    async def rem(self, ctx):
-        await self.add_or_rem(ctx, False)
-        """ self.gconf = self.config.guild(ctx.guild)
-        current_categories = await self.gconf.Startup_lines()
-        list_string = ""
-        for i, item in enumerate(current_categories):
-            list_string += "\n**{}**. {}".format(i+1, item)
-        await ctx.send("**Current startup lines**: {} \n*Which one do you want to remove?*"
-                       .format(list_string))
-
-        try:
-            while True:
-                pred = MessagePredicate.valid_int(ctx)
-                await ctx.bot.wait_for('message',timeout=7,check=pred)
-                number_choice = pred.result-1 # Minus one due to 0-indexed
-                try:
-                    rem_category = current_categories[number_choice]
-                    #add_index = default_json_categories.index(add_category)
-                    async with self.gconf.Startup_lines() as startup_lines:
-                        startup_lines.remove(rem_category)
-                        return await ctx.send("Category removed!")
-                except IndexError:
-                    await ctx.send("Incorrect number!")
-        except asyncio.TimeoutError:
-            await ctx.send("Timed out!")"""
 
     @settings.command()
     async def wordcount(self, ctx):
@@ -190,6 +129,34 @@ class OneWordStory(commands.Cog):
         filepath = self.path / 'default_lines.json'
         with open(filepath) as json_file:
             return(json.load(json_file))
+            
+    @commands.command()
+    async def islilhatastinkydoodoohead(self, ctx):
+        await ctx.send("Yes")
+
+    @commands.command()
+    async def gospel(self,ctx):
+        await ctx.send("""Ahh, P-Mo bomp bobble
+
+This is the story of Captain Hook
+A young Swede that liked to cook up rhymes
+In the bathroom all alone
+Singing hooky hooky gibberish into his phone
+There's no need to steal from Marvin Gaye (no!)
+When the hottest hooks are public domain
+'Cause if Foster Sylvers's got a misdemeanor
+I'll make off with a felony explicit or clean
+Or whatever you need to bleep in the mix
+I still make hits that don't even rhyme
+That aren't even in time""")
+
+    @lines.command()
+    async def add(self, ctx):
+        await self.add_or_rem(ctx, True)
+
+    @lines.command()
+    async def rem(self, ctx):
+        await self.add_or_rem(ctx, False)
 
     async def add_or_rem(self, ctx, add_or_rem_bool: bool):
 
@@ -204,20 +171,20 @@ class OneWordStory(commands.Cog):
 
         # Gets available lines.
         default_json_lines_dict = await self.get_default_lines(ctx)
-        message_str = ("**Current startup lines**:")
+        message_str = ("**Current startup lines**: ")
 
         if add_or_rem_bool:
             default_json_categories = list(default_json_lines_dict["Startup_lines"])
             available_categories = [category for category in default_json_categories if category not in current_categories]
             pick_category_list_string = format_category_list(available_categories)
 
-            message_str += ("{}\n **All available**: {}\n*Which one do you want to add?*".format(humanize_list(current_categories),pick_category_list_string))
+            message_str += ("{}\n**All available**: {}\n*Which one do you want to add?*".format(humanize_list(current_categories),pick_category_list_string))
 
         else:
             pick_category_list_string = format_category_list(current_categories)
-            message_str += "\n{}*Which one do you want to remove?*".format(pick_category_list_string)
+            message_str += "\n{}\n*Which one do you want to remove?*".format(pick_category_list_string)
 
-        
+
         await ctx.send(message_str)
 
 
