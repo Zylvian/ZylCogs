@@ -375,13 +375,13 @@ That aren't even in time""")
     """
     Checks if the message is user join worthy.
     """
-    async def join_user_add(self, ctx, message:discord.Message, join_users:list):
-        if(message.author not in join_users and message.content.lower()=="ows"):
+    async def join_user_add(self, ctx, message:discord.Message, join_users: list):
+        if message.author not in join_users and message.content.lower()=="ows":
                 join_users.append(message.author)
                 await ctx.send("{} joined!".format(message.author.mention))
-                return (join_users, True)
+                return join_users, True
         else:
-            return (join_users, False) 
+            return join_users, False
 
     async def take_input(self, ctx, join_users, start_line, bonus_round_time:int):
 
@@ -430,7 +430,7 @@ That aren't even in time""")
                 maybe_s_string = ""
                 if max_words_allowed > 1:
                     maybe_s_string = "s"
-                wordmsg = await ctx.send(f"*{start_line}*...\nAlright {tempuser.mention}, give me {max_words_allowed} word{maybe_s_string}! *{current} seconds remaining...*"
+                wordmsg = await ctx.send(f"*{start_line}*...\nAlright {tempuser.mention}, give me {max_words_allowed} word{maybe_s_string}! *{current} seconds remaining...*")
                                          #.format(start_line=start_line, max_words_allowed=max_words_allowed, user_mention=tempuser.mention, current=current, maybe_s_string=maybe_s_string))
                 
                 
