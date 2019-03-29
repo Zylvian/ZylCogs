@@ -61,8 +61,8 @@ class OneWordStory(commands.Cog):
      
         ows_defaults = {'Cooldown': 3600,
                             'Counter': 0,
-                            'Round_time': 3, # CHANGE ME to 100
-                            'Start_time': 5, # Change me to 60
+                            'Round_time': 100, # CHANGE ME to 100
+                            'Start_time': 60, # Change me to 60
                             'Answer_time': 14,
                             'Max_words': 40,
                             'User_time_add': 10,
