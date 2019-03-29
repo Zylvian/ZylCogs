@@ -439,7 +439,7 @@ That aren't even in time""")
                             words_addition = list()
                             for i, word in enumerate(content_word_list):
                                 if len(content) <= wordlength:
-                                    if (word in ".,?!;:")
+                                    if (word in ".,?!;:"):
                                         if i == 0:
                                             start_line.rstrip()
                                             start_line += word
