@@ -165,6 +165,7 @@ That aren't even in time""")
     async def rem(self, ctx):
         await self.add_or_rem(ctx, False)
 
+    # Add is True, remove is False.
     async def add_or_rem(self, ctx, add_or_rem_bool: bool):
 
         def format_category_list(category_list):
@@ -185,7 +186,13 @@ That aren't even in time""")
             available_categories = [category for category in default_json_categories if category not in current_categories]
             pick_category_list_string = format_category_list(available_categories)
 
-            message_str += ("{}\n**All available**: {}\n*Which one do you want to add?*".format(humanize_list(current_categories),pick_category_list_string))
+            # At the writing of this code, "humanize_list()" crashes upon receiving an empty list.
+            try:
+                current_categories_humanized = humanize_list(current_categories)
+            except IndexError:
+                current_categories_humanized = ""
+
+            message_str += ("{}\n**All available**: {}\n*Which one do you want to add?*".format(current_categories_humanized,pick_category_list_string))
 
         else:
             pick_category_list_string = format_category_list(current_categories)

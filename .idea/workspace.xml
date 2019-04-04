@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="276f89b1-2f8f-490b-85cf-65e9a5431488" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onewordstory/data/default_lines.json" beforeDir="false" afterPath="$PROJECT_DIR$/onewordstory/data/default_lines.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onewordstory/onewordstory.py" beforeDir="false" afterPath="$PROJECT_DIR$/onewordstory/onewordstory.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,24 +15,24 @@
     <session id="102967430">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="3" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.7" value="1" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.open.time.9" value="2" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="json" value="344" />
-          <entry key="py" value="5384" />
+          <entry key="py" value="5595" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="344" />
-          <entry key="Python" value="5384" />
+          <entry key="Python" value="5595" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -49,26 +49,26 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/onewordstory/data/default_lines.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="174" selection-start-line="16" selection-start-column="174" selection-end-line="16" selection-end-column="174" />
+            <state relative-caret-position="119">
+              <caret line="7" column="75" selection-start-line="7" selection-start-column="75" selection-end-line="7" selection-end-column="75" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/onewordstory/onewordstory.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="227">
-              <caret line="406" column="23" selection-start-line="406" selection-start-column="23" selection-end-line="406" selection-end-column="23" />
+            <state relative-caret-position="125">
+              <caret line="182" lean-forward="true" selection-start-line="182" selection-end-line="182" />
               <folding>
                 <element signature="e#11#25#0" expanded="true" />
-                <marker date="1553836052674" expanded="true" signature="2827:2836" ph="..." />
-                <marker date="1553836052674" expanded="true" signature="2827:3187" ph="..." />
-                <marker date="1553836052674" expanded="true" signature="3242:3904" ph="..." />
-                <marker date="1553836052674" expanded="true" signature="4735:4741" ph="..." />
+                <marker date="1554339372644" expanded="true" signature="2827:2836" ph="..." />
+                <marker date="1554339372644" expanded="true" signature="2827:3187" ph="..." />
+                <marker date="1554339372644" expanded="true" signature="3242:3904" ph="..." />
+                <marker date="1554339372644" expanded="true" signature="4735:4741" ph="..." />
               </folding>
             </state>
           </provider>
@@ -104,6 +104,7 @@
       <find>add</find>
       <find>word</find>
       <find>max</find>
+      <find>humanize</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -112,8 +113,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/onewordstory/onewordstory.py" />
         <option value="$PROJECT_DIR$/onewordstory/data/default_lines.json" />
+        <option value="$PROJECT_DIR$/onewordstory/onewordstory.py" />
       </list>
     </option>
   </component>
@@ -199,7 +200,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18336888" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18550107" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -213,7 +214,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.17570499" />
+      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.17570499" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -229,6 +230,13 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/onewordstory/data/default_lines.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="75" selection-start-line="7" selection-start-column="75" selection-end-line="7" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/msg_ctrl/msg_ctrl.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1241">
@@ -241,22 +249,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/onewordstory/onewordstory.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="406" column="23" selection-start-line="406" selection-start-column="23" selection-end-line="406" selection-end-column="23" />
+        <state relative-caret-position="125">
+          <caret line="182" lean-forward="true" selection-start-line="182" selection-end-line="182" />
           <folding>
             <element signature="e#11#25#0" expanded="true" />
-            <marker date="1553836052674" expanded="true" signature="2827:2836" ph="..." />
-            <marker date="1553836052674" expanded="true" signature="2827:3187" ph="..." />
-            <marker date="1553836052674" expanded="true" signature="3242:3904" ph="..." />
-            <marker date="1553836052674" expanded="true" signature="4735:4741" ph="..." />
+            <marker date="1554339372644" expanded="true" signature="2827:2836" ph="..." />
+            <marker date="1554339372644" expanded="true" signature="2827:3187" ph="..." />
+            <marker date="1554339372644" expanded="true" signature="3242:3904" ph="..." />
+            <marker date="1554339372644" expanded="true" signature="4735:4741" ph="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/onewordstory/data/default_lines.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="174" selection-start-line="16" selection-start-column="174" selection-end-line="16" selection-end-column="174" />
         </state>
       </provider>
     </entry>
