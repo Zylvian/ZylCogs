@@ -23,7 +23,6 @@ class Countdown_Tagger(commands.Cog):
         #    await message.channel.send("cehck me out FIRST")
 
         if message.guild.me.mentioned_in(message):
-            await message.channel.send("cehck me out")
             premiere_time = dateutil.parser.parse(self.premiere_date).replace(tzinfo=None)
             curr_time = datetime.datetime.now().replace(tzinfo=None)
             days_til_premiere = (premiere_time-curr_time).days
