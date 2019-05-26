@@ -16,9 +16,10 @@ class Countdown_Tagger(commands.Cog):
         self.premiere_date = "2019-11-01T00:00:00+0100"
         #self.database.register_guild(**defaults)
 
-
     async def on_message(self, message: discord.Message):
-        #if self.bot.user.mentioned_in(message):
+        if self.bot.user.mentioned_in(message):
+            await message.channel.send("cehck me out FIRST")
+
         if message.guild.me.mentioned_in(message):
             await message.channel.send("cehck me out")
             premiere_time = dateutil.parser.parse(self.premiere_date).replace(tzinfo=None)
