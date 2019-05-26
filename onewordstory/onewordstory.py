@@ -119,6 +119,7 @@ class OneWordStory(commands.Cog):
 
     @settings.command()
     async def wordcount(self, ctx):
+        """Set how many words are allowed per prompt!"""
         self.gconf = self.config.guild(ctx.guild)
         wordcount = await self.gconf.Word_count()
         await ctx.send("The current amount of allowed words are **{}**.\nWhat do you wish to set it to?".format(wordcount))
