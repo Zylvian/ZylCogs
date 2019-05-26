@@ -17,8 +17,10 @@ class Countdown_Tagger(commands.Cog):
         #self.database.register_guild(**defaults)
 
 
-    async def on_message(self, message):
-        if self.bot.user.mentioned_in(message):
+    async def on_message(self, message: discord.Message):
+        #if self.bot.user.mentioned_in(message):
+        if message.guild.me.mentioned_in(message):
+            await message.channel.send("cehck me out")
             premiere_time = dateutil.parser.parse(self.premiere_date).replace(tzinfo=None)
             curr_time = datetime.datetime.now().replace(tzinfo=None)
             days_til_premiere = (premiere_time-curr_time).days
