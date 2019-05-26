@@ -25,11 +25,15 @@ class Countdown_Tagger(commands.Cog):
 
             send_msg = "Season 4 will premiere in **{}** days!".format(days_til_premiere)
 
-            if days_til_premiere <= 0:
-                send_msg = "Season 4 has already premiered!"
+            #if days_til_premiere <= 0:
+            #    send_msg = "Season 4 has already premiered!"
 
             await message.channel.send(send_msg)
 
         #if message.author.id == 233669548673335296:
         #    await message.channel.send("ayo")
 
+    @checks.mod_or_permissions(administrator=True)
+    @commands.command()
+    async def testman(self, ctx):
+        await ctx.send("yeah I exist")
