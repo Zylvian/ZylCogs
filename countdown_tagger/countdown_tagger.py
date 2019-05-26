@@ -24,7 +24,7 @@ class Countdown_Tagger(commands.Cog):
             days_til_premiere = (premiere_time-curr_time).days
 
             send_msg = "Season 4 will premiere in **{}** days!".format(days_til_premiere)
-            
+
             if days_til_premiere <= 0:
                 send_msg = "Season 4 has already premiered!"
 
