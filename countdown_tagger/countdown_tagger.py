@@ -19,8 +19,8 @@ class Countdown_Tagger(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
 
-        if self.bot.user.mentioned_in(message):
-            await message.channel.send("cehck me out FIRST")
+        #if self.bot.user.mentioned_in(message):
+        #    await message.channel.send("cehck me out FIRST")
 
         if message.guild.me.mentioned_in(message):
             await message.channel.send("cehck me out")
@@ -30,8 +30,8 @@ class Countdown_Tagger(commands.Cog):
 
             send_msg = "Season 4 will premiere in **{}** days!".format(days_til_premiere)
 
-            #if days_til_premiere <= 0:
-            #    send_msg = "Season 4 has already premiered!"
+            if days_til_premiere <= 0:
+                send_msg = "Season 4 has already premiered!"
 
             await message.channel.send(send_msg)
 
