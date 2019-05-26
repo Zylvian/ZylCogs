@@ -16,8 +16,8 @@ class Countdown_Tagger(commands.Cog):
         self.premiere_date = "2019-11-01T00:00:00+0100"
         #self.database.register_guild(**defaults)
 
+    @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
-        await message.channel.send("ohshit somebody sent sumthn")
 
         if self.bot.user.mentioned_in(message):
             await message.channel.send("cehck me out FIRST")
