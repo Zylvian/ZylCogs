@@ -18,6 +18,7 @@ class Countdown_Tagger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
+        await message.channel.send("asdasd")
 
         if self.bot.user.mentioned_in(message):
             await message.channel.send("cehck me out FIRST")
