@@ -36,7 +36,7 @@ class Countdown_Tagger(commands.Cog):
                 if premiere_date is None:
                     return
 
-                premiere_date = dateutil.parser.parse(self.premiere_date).replace(tzinfo=None)
+                premiere_date = dateutil.parser.parse(premiere_date).replace(tzinfo=None)
                 curr_time = datetime.datetime.now().replace(tzinfo=None)
                 days_til_something = (premiere_date - curr_time).days
 
