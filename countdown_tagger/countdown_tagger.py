@@ -25,7 +25,7 @@ class Countdown_Tagger(commands.Cog):
         gconf = self.config.guild(message.guild)
         toggled = await gconf.toggled()
 
-        print("Toggled:" + toggled)
+        print("Toggled:" + str(toggled))
 
         if toggled:
             if message.guild.me.mentioned_in(message):
