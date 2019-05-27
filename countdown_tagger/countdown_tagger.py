@@ -7,7 +7,8 @@ import asyncio
 from redbot.core.utils.predicates import MessagePredicate
 
 defaults = {"toggled": False,
-            "msg_format": "Season 4 will premiere in **{}** days!"}
+            "msg_format": "Season 4 will premiere in **{}** days!",
+            "premiere_date": None}
 
 
 class Countdown_Tagger(commands.Cog):
