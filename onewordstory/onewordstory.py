@@ -98,12 +98,12 @@ class OneWordStory(commands.Cog):
 
     @settings.group(autohelp=True)
     async def lines(self, ctx):
-        """Pick which lines to use with your bot!"""
+        """Pick which starting lines to use with your bot!"""
         pass
 
     @settings.command()
     async def counter_reset(self,ctx):
-        """Resets the game counter!"""
+        """Resets the game counter! (the "One Word Story #xx" counter)"""
         async with self.config.guild(ctx.guild).Counter() as counter:
             counter = 0
             await ctx.send("Counter reset to " + counter)
@@ -138,32 +138,14 @@ class OneWordStory(commands.Cog):
         with open(filepath) as json_file:
             return(json.load(json_file))
 
-    @commands.command()
-    async def is_lil_hat_a_stinky_doodoo_head(self, ctx):
-        await ctx.send("Yes")
-
-    @commands.command()
-    async def gospel(self,ctx):
-        await ctx.send("""Ahh, P-Mo bomp bobble
-
-This is the story of Captain Hook
-A young Swede that liked to cook up rhymes
-In the bathroom all alone
-Singing hooky hooky gibberish into his phone
-There's no need to steal from Marvin Gaye (no!)
-When the hottest hooks are public domain
-'Cause if Foster Sylvers's got a misdemeanor
-I'll make off with a felony explicit or clean
-Or whatever you need to bleep in the mix
-I still make hits that don't even rhyme
-That aren't even in time""")
-
     @lines.command()
     async def add(self, ctx):
+        """Add a set of preset starting lines."""
         await self.add_or_rem(ctx, True)
 
     @lines.command()
     async def rem(self, ctx):
+        """Remove one of the active sets of starting lines."""
         await self.add_or_rem(ctx, False)
 
     # Add is True, remove is False.
@@ -262,6 +244,8 @@ That aren't even in time""")
         startup_lines = list()
         global bonus_round_time
         bonus_round_time = 0
+        global max_words_allowed
+        max_words_allowed = await self.gconf.Word_count()
 
         with open(filepath) as json_file:  
             data = json.load(json_file)
@@ -291,7 +275,10 @@ That aren't even in time""")
         current = begin
         # The time before it starts.
         start_time = await self.config.guild(ctx.guild).get_raw('Start_time')
-        start_msg = await ctx.send("✎ **ONE WORD STORY TIME!** 📖\nBeep boop, it's time to play 'One Word Story!' Type **ows** in the chat to join! We start in {} seconds!".format(start_time))
+        start_msg = await ctx.send("✎ **ONE WORD STORY TIME!** 📖\n"
+                                   "*Per user words:* **{user_words}** \n"
+                                   "Beep boop, it's time to play 'One Word Story!' Type **ows** in the chat to join! We start in {start_time} seconds!"
+                                   .format(start_time=start_time,user_words=max_words_allowed))
         
         delmsgs = []
         delmsgs.append(start_msg)
@@ -406,7 +393,6 @@ That aren't even in time""")
         user_time_add = await self.config.guild(ctx.guild).get_raw('User_time_add')
 
         user_cd = await self.config.guild(ctx.guild).get_raw('Answer_time')
-        max_words_allowed = await self.gconf.Word_count()
         user_cd += 3*max_words_allowed
         pick_users = join_users.copy()
         cd_users = list()
