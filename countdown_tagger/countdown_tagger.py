@@ -50,7 +50,7 @@ class Countdown_Tagger(commands.Cog):
         """Ows group command"""
         pass
 
-    @cd_tag.group(autohelp=True)
+    @cd_tag.command()
     async def date(self, ctx):
         """Set the date of your countdown!"""
         gconf = self.config.guild(ctx.guild)
@@ -64,7 +64,7 @@ class Countdown_Tagger(commands.Cog):
             message = await self.bot.wait_for('message',
                                           timeout=15, check=usercheck)
 
-            new_date = dateutil.parser.parse(message)
+            new_date = dateutil.parser.parse(message.content)
 
             await ctx.send("Is this the correct date?\n{} (y/n)".format(new_date))
 
@@ -82,13 +82,13 @@ class Countdown_Tagger(commands.Cog):
 
 
 
-    @cd_tag.group(autohelp=True)
+    @cd_tag.command()
     async def on(self, ctx):
         """Toggle your cooldown tagger on!"""
         gconf = self.config.guild(ctx.guild)
         await gconf.toggled.set(True)
 
-    @cd_tag.group(autohelp=True)
+    @cd_tag.command()
     async def off(self, ctx):
         """Toggle your cooldown tagger off!"""
         gconf = self.config.guild(ctx.guild)
