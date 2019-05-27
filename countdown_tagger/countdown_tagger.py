@@ -31,14 +31,14 @@ class Countdown_Tagger(commands.Cog):
             if message.guild.me.mentioned_in(message):
 
                 msg_format = await gconf.msg_format()
-                premiere_time = await gconf.premiere_date()
+                premiere_date = await gconf.premiere_date()
 
-                if premiere_time is None:
+                if premiere_date is None:
                     return
 
-                premiere_time = dateutil.parser.parse(self.premiere_date).replace(tzinfo=None)
+                premiere_date = dateutil.parser.parse(self.premiere_date).replace(tzinfo=None)
                 curr_time = datetime.datetime.now().replace(tzinfo=None)
-                days_til_something = (premiere_time - curr_time).days
+                days_til_something = (premiere_date - curr_time).days
 
                 send_msg = msg_format.format(days_til_something)
 
