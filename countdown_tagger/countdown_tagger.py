@@ -25,6 +25,8 @@ class Countdown_Tagger(commands.Cog):
         gconf = self.config.guild(message.guild)
         toggled = await gconf.toggled()
 
+        print("Toggled:" + toggled)
+
         if toggled:
             if message.guild.me.mentioned_in(message):
 
@@ -67,7 +69,7 @@ class Countdown_Tagger(commands.Cog):
 
             new_date = dateutil.parser.parse(message.content)
 
-            await ctx.send("Is this the correct date?\n{} (y/n)".format(new_date))
+            await ctx.send("Is this the correct date?\n{}\n(y/n)".format(new_date))
 
             message = await self.bot.wait_for('message',
                                               timeout=15, check=usercheck) # type: discord.Message
@@ -88,9 +90,11 @@ class Countdown_Tagger(commands.Cog):
         """Toggle your cooldown tagger on!"""
         gconf = self.config.guild(ctx.guild)
         await gconf.toggled.set(True)
+        await ctx.send("Toggled the cooldown tagger on!")
 
     @cd_tag.command()
     async def off(self, ctx):
         """Toggle your cooldown tagger off!"""
         gconf = self.config.guild(ctx.guild)
         await gconf.toggled.set(False)
+        await ctx.send("Toggled the cooldown tagger off!")
