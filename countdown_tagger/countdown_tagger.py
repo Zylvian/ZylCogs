@@ -16,7 +16,7 @@ class Countdown_Tagger(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=420420420, force_registration=True)
         #self.premiere_date = "2019-11-01T00:00:00+0100"
-        self.database.register_guild(**defaults)
+        self.config.register_guild(**defaults)
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
