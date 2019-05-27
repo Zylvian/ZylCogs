@@ -1,1 +1,4 @@
-{"requirements": ["python-dateutil"]}
+{
+  "requirements": ["python-dateutil"],
+  "install_msg": "Set your desired countdown date using `[p]cd_tag`!"
+}

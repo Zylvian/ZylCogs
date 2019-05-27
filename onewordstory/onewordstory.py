@@ -276,8 +276,8 @@ class OneWordStory(commands.Cog):
         # The time before it starts.
         start_time = await self.config.guild(ctx.guild).get_raw('Start_time')
         start_msg = await ctx.send("✎ **ONE WORD STORY TIME!** 📖\n"
-                                   "*Per user words:* **{user_words}** \n"
-                                   "Beep boop, it's time to play 'One Word Story!' Type **ows** in the chat to join! We start in {start_time} seconds!"
+                                   "*Words per user: **{user_words}** *\n"
+                                   "Beep boop, it's time to play **'One Word Story!'**\nType **ows** in the chat to join! We start in {start_time} seconds!"
                                    .format(start_time=start_time,user_words=max_words_allowed))
         
         delmsgs = []
@@ -424,7 +424,7 @@ class OneWordStory(commands.Cog):
                 maybe_s_string = ""
                 if max_words_allowed > 1:
                     maybe_s_string = "s"
-                wordmsg = await ctx.send(f"*{start_line}*...\nAlright {tempuser.mention}, give me {max_words_allowed} word{maybe_s_string}! *{current} seconds remaining...*")
+                wordmsg = await ctx.send(f"*{start_line}*...\nAlright {tempuser.mention}, give me at most {max_words_allowed} word{maybe_s_string}! *{current} seconds remaining...*")
                                          #.format(start_line=start_line, max_words_allowed=max_words_allowed, user_mention=tempuser.mention, current=current, maybe_s_string=maybe_s_string))
                 
                 

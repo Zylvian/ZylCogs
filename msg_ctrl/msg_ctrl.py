@@ -12,6 +12,7 @@ class Msg_Ctrl(commands.Cog):
         self.database = Config.get_conf(self, identifier=420420420, force_registration=True)
         self.database.register_guild(**defaults)
 
+    @commands.Cog.listener()
     async def on_message(self, message):
         async with self.database.guild(message.guild).Only_Image_Channels() as only_image_channels:
             if message.channel.id in only_image_channels:
