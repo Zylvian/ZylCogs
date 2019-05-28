@@ -54,10 +54,10 @@ class Countdown_Tagger(commands.Cog):
                 message = await self.bot.wait_for('message',
                                                   timeout=15, check=usercheck)
 
-                new_date = dateutil.parser.parse(message.content)
+                new_date = dateutil.parser.parse(message.content, dayfirst=True)
                 days_until_something = self.get_days_until_date(new_date)
                 if days_until_something <=0:
-                    await ctx.sed("This date has already passed! Try again:")
+                    await ctx.send("This date has already passed! Try again:")
                 else:
                     break
 
@@ -113,7 +113,7 @@ class Countdown_Tagger(commands.Cog):
     async def get_send_msg(self, gconf):
 
         premiere_date_str = await gconf.premiere_date()
-        premiere_date = dateutil.parser.parse(premiere_date_str).replace(tzinfo=None)
+        premiere_date = dateutil.parser.parse(premiere_date_str, dayfirst=True).replace(tzinfo=None)
         custom_msg = await gconf.msg_format()
         msg_format = await gconf.msg_format()
 
