@@ -43,6 +43,7 @@ class Chat_Ctrl(commands.Cog):
     @checks.mod_or_permissions(administrator=True)
     @commands.command()
     async def img_only(self, ctx):
+        """Configure channels where only images are allowed."""
 
         try:
 
