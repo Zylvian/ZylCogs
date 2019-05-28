@@ -67,7 +67,7 @@ class Countdown_Tagger(commands.Cog):
                                               timeout=15, check=usercheck)  # type: discord.Message
 
             if message.content == "y":
-                await gconf.premiere_date.set(str(new_date))
+                await gconf.premiere_date.set(new_date)
                 await ctx.send("Saved!")
             else:
                 await ctx.send("Stopping.")
@@ -113,7 +113,7 @@ class Countdown_Tagger(commands.Cog):
     async def get_send_msg(self, gconf):
 
         premiere_date_str = await gconf.premiere_date()
-        premiere_date = dateutil.parser.parse(premiere_date_str, dayfirst=True).replace(tzinfo=None)
+        premiere_date = dateutil.parser.parse(premiere_date_str).replace(tzinfo=None)
         custom_msg = await gconf.custom_msg()
         msg_format = await gconf.msg_format()
 
