@@ -1,0 +1,8 @@
+{
+    "author" : ["Zylvian"],
+    "install_msg" : "Do `[p]ows start` to get started!",
+    "name" : "One Word Story",
+    "short" : "Make a story with your friends - one (or more) words at a time!",
+    "description" : "Make a story with your friends - one (or more) words at a time!",
+    "tags" : ["onewordstory"]
+}

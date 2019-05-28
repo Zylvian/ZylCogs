@@ -1,0 +1,5 @@
+{
+  "author" : ["Zylvian"],
+  "name" : "Chat Control",
+  "description": "Control the type of content posted in channels, such as images etc."
+}

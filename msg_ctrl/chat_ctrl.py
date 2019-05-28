@@ -5,7 +5,7 @@ import asyncio
 defaults = {"Only_Image_Channels": [],  
             } 
 
-class Msg_Ctrl(commands.Cog):
+class Chat_Ctrl(commands.Cog):
 
     
     def __init__(self):

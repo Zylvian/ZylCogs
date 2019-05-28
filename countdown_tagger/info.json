@@ -1,4 +1,7 @@
 {
+  "author" : ["Zylvian"],
   "requirements": ["python-dateutil"],
-  "install_msg": "Set your desired countdown date using `[p]cd_tag`!"
+  "install_msg": "Set your desired countdown date using `[p]cd_tag`!",
+  "name" : "Cooldown Tagger",
+  "description": "Set a date and ping the bot to see how long is left!"
 }
