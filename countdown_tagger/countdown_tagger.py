@@ -43,8 +43,8 @@ class Countdown_Tagger(commands.Cog):
         """Set the date of your countdown!"""
         gconf = self.config.guild(ctx.guild)
 
-        await ctx.send("**Post your date in this format:**\n***DAY MONTH YEAR***\n"
-                       '*I.e* `17 04 1980` ')
+        await ctx.send("**Post your date in this format:**\n`DAY MONTH YEAR`\n"
+                       '*I.e 17 04 1980* ')
 
         usercheck = MessagePredicate.same_context(ctx)
 
@@ -61,13 +61,13 @@ class Countdown_Tagger(commands.Cog):
                 else:
                     break
 
-            await ctx.send("**Is this the correct date?**\n***{}***\n*(y/n)*".format(new_date.strftime("%d %m %y")))
+            await ctx.send("**Is this the correct date?**\n`{}`\n*(y/n)*".format(new_date.strftime("%d %m %y")))
 
             message = await self.bot.wait_for('message',
                                               timeout=15, check=usercheck)  # type: discord.Message
 
             if message.content == "y":
-                await gconf.premiere_date.set(new_date)
+                await gconf.premiere_date.set(str(new_date))
                 await ctx.send("Saved!")
             else:
                 await ctx.send("Stopping.")
