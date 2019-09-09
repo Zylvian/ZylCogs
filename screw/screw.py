@@ -17,7 +17,6 @@ class Screw(commands.Cog):
     async def on_message(self, message: discord.Message):
 
         gconf = self.config.guild(message.guild)
-        #toggled = await gconf.toggled()
 
         if "screw" in message.content:
             send_msg = "screw \n \nscrew"
