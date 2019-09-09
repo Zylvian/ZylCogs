@@ -13,7 +13,7 @@ class Screw(commands.Cog):
 
         gconf = self.config.guild(message.guild)
 
-        if "screw" in message.content and message.author != self.bot.user:
+        if "screw" in message.content.lower() and message.author != self.bot.user:
             send_msg = "screw \n \nscrew"
 
             await message.channel.send(send_msg)
