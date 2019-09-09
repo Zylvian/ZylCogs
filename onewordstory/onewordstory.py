@@ -112,7 +112,8 @@ class OneWordStory(commands.Cog):
     async def rules(self, ctx):
         """How this game works!"""
         await ctx.send("**One Word Story!** *(well, depends)*\n"
-                       "When it's your turn, write continue the story! \n"
+                       "After a game has launched, type **ows** to join!"
+                       "When it's your turn, continue the story with the specified number of words! \n"
                        "Type **Goodbye!** whenever to vote for ending the story before the timer is up!"
                        "*(The timer resets for each new word added.)* ")
 
