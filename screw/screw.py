@@ -1,11 +1,5 @@
 from redbot.core import commands, Config, checks
-import datetime
-import dateutil.parser
 import discord
-import asyncio
-
-from redbot.core.utils.predicates import MessagePredicate
-
 
 class Screw(commands.Cog):
 
