@@ -1,5 +1,6 @@
 from redbot.core import commands, Config, checks
 import discord
+import asyncio
 
 class Screw(commands.Cog):
 
@@ -12,7 +13,9 @@ class Screw(commands.Cog):
 
         gconf = self.config.guild(message.guild)
 
-        if "screw" in message.content:
+        if "screw" in message.content and message.author != self.bot.user:
             send_msg = "screw \n \nscrew"
 
             await message.channel.send(send_msg)
+
+            asyncio.sleep(2)
