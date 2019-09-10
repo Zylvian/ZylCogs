@@ -21,7 +21,8 @@ class Clapify(commands.Cog):
         if var:
             if not isinstance(var, str):
                 channel = ctx.channel
-                var = await channel.fetch_message(var).content
+                msg = await channel.fetch_message(var)
+                var = msg.content
 
         clapified_str = var.replace(" ", " {} ".format(emoji))
 
@@ -30,7 +31,7 @@ class Clapify(commands.Cog):
     @commands.command(autohelp=True)
     async def testballs(self, ctx, butt:int):
         channel = ctx.channel
-        var = await channel.fetch_message(butt).content
-        await ctx.send(var)
+        msg = await channel.fetch_message(butt).content
+        await ctx.send(msg)
 
 
