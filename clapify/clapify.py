@@ -10,10 +10,11 @@ class Clapify(commands.Cog):
         self.config = Config.get_conf(self, identifier=420420420, force_registration=True)
 
     @commands.command(autohelp=True)
-    async def clapify(self, ctx, emoji: Optional[discord.Emoji], *, var: Union[discord.Message, str]):
-
-        if not emoji:
-            emoji = "👏"
+    async def clapify(self, ctx, *, var: Union[discord.Message, str]):
+        """Give me a string or a message ID!"""
+        #emoji: Optional[discord.Emoji],
+        #if not emoji:
+        emoji = "👏"
 
         if not isinstance(var, str):
             var = var.content
