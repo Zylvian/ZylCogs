@@ -9,7 +9,7 @@ class Clapify(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=420420420, force_registration=True)
 
-    @commands.group(autohelp=True)
+    @commands.command(autohelp=True)
     async def clapify(self, ctx, emoji: Optional[discord.Emoji], *, var: Union[discord.Message, str]):
 
         if not emoji:
