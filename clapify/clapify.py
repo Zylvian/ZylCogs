@@ -12,22 +12,25 @@ class Clapify(commands.Cog):
         self.config = Config.get_conf(self, identifier=420420420, force_registration=True)
 
     @commands.command(autohelp=True)
-    async def clapify(self, ctx, emoji: Optional[discord.Emoji], *var: Union[discord.Message, str]):
+    async def clapify(self, ctx, emoji: Optional[discord.Emoji], *var: Union[int, str]):
         """Give me a string or a message ID!"""
         #
         if not emoji:
             emoji = "👏"
 
-        if not isinstance(var, str):
-            var = var.content
+        if var:
+            if not isinstance(var, str):
+                channel = ctx.channel
+                var = await channel.fetch_message(var).content
 
         clapified_str = var.replace(" ", " {} ".format(emoji))
 
         await ctx.send(clapified_str)
 
     @commands.command(autohelp=True)
-    async def testballs(self, ctx, butt:discord.Message):
-
-        await ctx.send(butt)
+    async def testballs(self, ctx, butt:int):
+        channel = ctx.channel
+        var = await channel.fetch_message(butt).content
+        await ctx.send(var)
 
 
