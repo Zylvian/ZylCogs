@@ -25,12 +25,14 @@ class Clapify(commands.Cog):
                 msg = await channel.fetch_message(var)
                 var = msg.content
 
-        pages = chat_formatting.pagify(var)
 
-        clapified_pages = [x.replace(" ", " {} ".format(emoji)) for x in pages]
+
+        clapified_str = var.replace(" ", " {} ".format(emoji))
+
+        clapified_pages = chat_formatting.pagify(clapified_str)
 
         await ctx.message.delete()
-        
+
         for page in clapified_pages:
             await ctx.send(page)
 
