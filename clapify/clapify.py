@@ -25,12 +25,14 @@ class Clapify(commands.Cog):
                 msg = await channel.fetch_message(var)
                 var = msg.content
 
-        var = chat_formatting.pagify(var)
+        pages = chat_formatting.pagify(var)
 
-        clapified_str = var.replace(" ", " {} ".format(emoji))
+        clapified_pages = [x.replace(" ", " {} ".format(emoji)) for x in pages]
 
         await ctx.message.delete()
-        await ctx.send(clapified_str)
+        
+        for page in clapified_pages:
+            await ctx.send(page)
 
     @commands.command(autohelp=True)
     async def testballs(self, ctx, butt:int):
