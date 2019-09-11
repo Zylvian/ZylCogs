@@ -67,3 +67,6 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 chat_ctrl/__pycache__/__init__.cpython-37.pyc
 .idea/workspace.xml
+.idea/workspace.xml
+clapify/randomtestshit.py
+*.pyc

@@ -1,6 +1,7 @@
 import json
 
 from redbot.core import commands, Config, checks
+from redbot.core.utils import chat_formatting
 import discord
 from typing import Union, Optional
 
@@ -23,6 +24,8 @@ class Clapify(commands.Cog):
                 channel = ctx.channel
                 msg = await channel.fetch_message(var)
                 var = msg.content
+
+        var = chat_formatting.pagify(var)
 
         clapified_str = var.replace(" ", " {} ".format(emoji))
 
