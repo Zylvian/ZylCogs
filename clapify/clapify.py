@@ -26,6 +26,7 @@ class Clapify(commands.Cog):
 
         clapified_str = var.replace(" ", " {} ".format(emoji))
 
+        await ctx.message.delete()
         await ctx.send(clapified_str)
 
     @commands.command(autohelp=True)
