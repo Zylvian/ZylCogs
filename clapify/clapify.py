@@ -16,6 +16,8 @@ class Clapify(commands.Cog):
     async def clapify(self, ctx, emoji: Optional[discord.Emoji], *, var: Union[int, str]):
         """Give me a string or a message ID!"""
         #
+        user_name = ctx.author.nick
+
         if not emoji:
             emoji = "👏"
 
@@ -28,8 +30,9 @@ class Clapify(commands.Cog):
 
 
         clapified_str = var.replace(" ", " {} ".format(emoji))
-
         clapified_pages = chat_formatting.pagify(clapified_str)
+        clapified_str[-1] += (" " + user_name)
+
 
         await ctx.message.delete()
 
