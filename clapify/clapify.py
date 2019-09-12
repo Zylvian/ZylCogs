@@ -16,7 +16,7 @@ class Clapify(commands.Cog):
     async def clapify(self, ctx, emoji: Optional[discord.Emoji], *, var: Union[int, str]):
         """Give me a string or a message ID!"""
         #
-        user_name = ctx.author.nick
+        user_name = ctx.author.display_name
 
         if not emoji:
             emoji = "👏"
