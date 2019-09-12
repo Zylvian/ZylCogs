@@ -30,7 +30,7 @@ class Clapify(commands.Cog):
 
 
         clapified_str = var.replace(" ", " {} ".format(emoji))
-        clapified_pages = chat_formatting.pagify(clapified_str)
+        clapified_pages = list(chat_formatting.pagify(clapified_str))
         clapified_pages[-1] += ("*(clapified by {}*".format(user_name))
 
 
