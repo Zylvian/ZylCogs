@@ -31,7 +31,7 @@ class Clapify(commands.Cog):
 
         clapified_str = var.replace(" ", " {} ".format(emoji))
         clapified_pages = chat_formatting.pagify(clapified_str)
-        clapified_str[-1] += (" " + user_name)
+        clapified_str[-1] += ("*(clapified by {}*".format(user_name))
 
 
         await ctx.message.delete()
