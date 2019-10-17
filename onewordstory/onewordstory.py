@@ -1,39 +1,12 @@
-# Discord 
-import discord
-
-import random
-import time
-import unicodedata
-import asyncio
-import uuid
-import datetime
-import heapq
-import lavalink
 import math
-import re
 import time
 
 # Red
-from redbot.core import Config, bank, commands, checks
-from redbot.core.data_manager import bundled_data_path
-from redbot.core import commands
 from redbot.core.utils.predicates import MessagePredicate
 from redbot.core.utils.chat_formatting import humanize_list
 
-
-
 # Standard Library
-import asyncio
-import csv
-import logging
-import random
-import textwrap
-import uuid
-from bisect import bisect
-from copy import deepcopy
-from itertools import zip_longest
 import json
-
 
 # Red
 from redbot.core import Config, bank, commands, checks
@@ -41,7 +14,6 @@ from redbot.core.data_manager import bundled_data_path
 
 # Discord 
 import discord
-#from discord.ext import commands
 
 # Others
 import asyncio
@@ -50,7 +22,7 @@ import random
 
 
 class OneWordStory(commands.Cog):
-
+    """Make a story one word at a time! (or any other amount of words)"""
 
     def __init__(self,bot):
         self.tasks = []
@@ -76,7 +48,7 @@ class OneWordStory(commands.Cog):
         self.config.register_guild(**ows_defaults)
 
     """Required to stop shit that's looping"""
-    def __unload(self):
+    def cog_unload(self):
         for task in self.tasks:
             task.cancel()
 
@@ -104,14 +76,13 @@ class OneWordStory(commands.Cog):
     @settings.command()
     async def counter_reset(self,ctx):
         """Resets the game counter! (the "One Word Story #xx" counter)"""
-        async with self.config.guild(ctx.guild).Counter() as counter:
-            counter = 0
-            await ctx.send("Counter reset to " + counter)
+        await self.gconf.Word_count.set(0)
+        await ctx.send("Counter reset to 0!")
 
     @ows.command()
     async def rules(self, ctx):
         """How this game works!"""
-        await ctx.send("**One Word Story!** *(well, depends)*\n"
+        await ctx.send("**One Word Story!**\n"
                        "After a game has launched, type **ows** to join!"
                        "When it's your turn, continue the story with the specified number of words! \n"
                        "Type **Goodbye!** whenever to vote for ending the story before the timer is up!"
@@ -119,25 +90,20 @@ class OneWordStory(commands.Cog):
 
 
     @settings.command()
-    async def wordcount(self, ctx):
+    async def wordcount(self, ctx, word_count:int):
         """Set how many words are allowed per prompt!"""
-        self.gconf = self.config.guild(ctx.guild)
+        """self.gconf = self.config.guild(ctx.guild)
         wordcount = await self.gconf.Word_count()
         await ctx.send("The current amount of allowed words are **{}**.\nWhat do you wish to set it to?".format(wordcount))
         pred = MessagePredicate.valid_int(ctx)
         await ctx.bot.wait_for('message', timeout=7, check=pred)
-        number_choice = pred.result  # Minus one due to 0-indexed
-        if number_choice < 1:
-            return await ctx.send("It has to be larger than 0!")
+        number_choice = pred.result  # Minus one due to 0-indexed"""
+        if word_count < 1:
+            return await ctx.send("You can't have 0 words!")
         else:
-            await self.gconf.Word_count.set(number_choice)
-            return await ctx.send("Word count set to **{}**!".format(number_choice))
+            await self.gconf.Word_count.set(word_count)
+            return await ctx.send("Word count set to **{}**!".format(word_count))
 
-
-    async def get_default_lines(self, ctx):
-        filepath = self.path / 'default_lines.json'
-        with open(filepath) as json_file:
-            return(json.load(json_file))
 
     @lines.command()
     async def add(self, ctx):
@@ -148,6 +114,11 @@ class OneWordStory(commands.Cog):
     async def rem(self, ctx):
         """Remove one of the active sets of starting lines."""
         await self.add_or_rem(ctx, False)
+
+    async def get_default_lines(self, ctx):
+        filepath = self.path / 'default_lines.json'
+        with open(filepath) as json_file:
+            return (json.load(json_file))
 
     # Add is True, remove is False.
     async def add_or_rem(self, ctx, add_or_rem_bool: bool):
@@ -209,18 +180,23 @@ class OneWordStory(commands.Cog):
             await ctx.send("Timed out!")
 
     @gallery.command()
-    async def set_channel(self, ctx):
+    async def set(self, ctx, new_gallery_channel: discord.TextChannel):
         """Set the gallery channel!"""
-        def channelcheck(msg):
+        """def channelcheck(msg):
                 return ctx.author == msg.author and len(msg.channel_mentions) > 0
 
         await ctx.send("Tag the channel.")
         choice = await ctx.bot.wait_for('message',   
                                         timeout=5
                                         ,check=channelcheck)
-        new_gallery_channel = choice.channel_mentions[0]
+        new_gallery_channel = choice.channel_mentions[0]"""
         await self.config.guild(ctx.guild).set_raw("Gallery_channel_id", value=new_gallery_channel.id)
         await ctx.send("{} is the new One Word Story gallery!".format(new_gallery_channel.mention))
+
+    @gallery.command()
+    async def rem(self, ctx, rem_gallery_channel: discord.TextChannel):
+        await self.config.guild(ctx.guild).set_raw("Gallery_channel_id", value=rem_gallery_channel.id)
+        await ctx.send("Removed gallery channel. No gallery channel is set.s")
  
     @ows.command()
     async def start(self, ctx):
@@ -228,8 +204,6 @@ class OneWordStory(commands.Cog):
         self.tasks.append(self.bot.loop.create_task(self.start_cont(ctx)))
 
     async def start_cont(self, ctx):
-
-
         """ows_values = {
                     "Games":{
                         "One Word Story":
@@ -294,6 +268,7 @@ class OneWordStory(commands.Cog):
                 message = await self.bot.wait_for('message',    
                                               timeout=(start_time - (current-begin).seconds),check=usercheck
                                               )
+
                 # Checks if the bad boy needs to be added.
                 (join_users, join_bool) = await self.join_user_add(ctx, message, join_users)
                 if join_bool:
@@ -311,7 +286,7 @@ class OneWordStory(commands.Cog):
             delmsgs.append(delmsg)
             return 1, delmsgs
             
-        # Let the One WOrd Story start!
+        # Let the One Word Story start!
         start_line = random.choice(startup_lines)
         await ctx.send("Alright, lets begin! The number of words per message is **{}**! \nI'll go first: \n**{}**".format(await self.gconf.Word_count(), start_line))
         await asyncio.sleep(3)
@@ -337,7 +312,7 @@ class OneWordStory(commands.Cog):
         await delmessage.delete()
 
         embed = discord.Embed(
-            colour=ctx.guild.me.top_role.colour,
+            colour= await ctx.embed_color(),
             title = "One Word Story #{}".format(counter),
             description = ('{}').format(embed_string)
             )
@@ -386,7 +361,8 @@ class OneWordStory(commands.Cog):
 
         begin = datetime.datetime.now()
         current = begin
-        # COOLDOWN TIMEOUT WHATEVER
+
+        # COOLDOWN TIMEOUT
         global timeout_value
         timeout_value = await self.config.guild(ctx.guild).get_raw('Round_time')
         timeout_value += bonus_round_time
@@ -399,7 +375,7 @@ class OneWordStory(commands.Cog):
         cd_users = list()
         maxwordcount = await self.config.guild(ctx.guild).get_raw('Max_words')
         wordcount = 0 # To be used as an additional display of information.
-        wordlength = 22
+        wordlength = 32
 
 
         while True:
@@ -449,7 +425,9 @@ class OneWordStory(commands.Cog):
                     elif(message.author is tempuser):
                         content = message.content
 
+                        # Splits word at spaces.
                         content_word_list = content.split()
+                        # If the amount of words is less than max allowed
                         if not len(content_word_list) > max_words_allowed:
                             # Checks all words.
                             words_addition = list()
@@ -468,9 +446,9 @@ class OneWordStory(commands.Cog):
                                 
                                 else:
                                     await ctx.send("Word too long!")
+                                    break
 
                             start_line += " " + " ".join(words_addition)
-                            print(start_line)
                             break
 
                         else:

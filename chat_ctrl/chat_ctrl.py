@@ -6,7 +6,7 @@ defaults = {"Only_Image_Channels": [],
             } 
 
 class Chat_Ctrl(commands.Cog):
-
+"""Control the contents allowed in specific channels!"""
     
     def __init__(self):
         self.database = Config.get_conf(self, identifier=420420420, force_registration=True)
