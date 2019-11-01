@@ -28,7 +28,7 @@ class Derpify(commands.Cog):
 
         derpyfied_str = self._string_derp(var)
         derpyfied_pages = list(chat_formatting.pagify(derpyfied_str))
-        derpyfied_pages[-1] += ("\n*(clapified by {})*".format(user_name))
+        derpyfied_pages[-1] += ("\n*(derpyfied by {})*".format(user_name))
 
 
         await ctx.message.delete()
