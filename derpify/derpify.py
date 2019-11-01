@@ -42,7 +42,7 @@ class Derpify(commands.Cog):
             if (letter == ' '):
                 i = i - 1
             elif (i % 2 != 0):
-                letter += letter.upper()
+                letter = letter.upper()
             else:
                 letter = letter.lower()
 
