@@ -1,5 +1,6 @@
 import math
 import time
+#from cog_utils import *
 
 # Red
 from redbot.core.utils.predicates import MessagePredicate
@@ -190,6 +191,10 @@ class OneWordStory(commands.Cog):
                                         timeout=5
                                         ,check=channelcheck)
         new_gallery_channel = choice.channel_mentions[0]"""
+
+        # TODO
+        # Add permission check for gallery.
+
         await self.config.guild(ctx.guild).set_raw("Gallery_channel_id", value=new_gallery_channel.id)
         await ctx.send("{} is the new One Word Story gallery!".format(new_gallery_channel.mention))
 
@@ -201,7 +206,12 @@ class OneWordStory(commands.Cog):
     @ows.command()
     async def start(self, ctx):
         """Starts a game of One Word Story!"""
-        self.tasks.append(self.bot.loop.create_task(self.start_cont(ctx)))
+
+        # Will be used later for self-looping OWSes.
+        #self.tasks.append(self.bot.loop.create_task(self.start_cont(ctx)))
+
+        self.start_cont(ctx)
+
 
     async def start_cont(self, ctx):
         """ows_values = {
@@ -285,15 +295,20 @@ class OneWordStory(commands.Cog):
             delmsg = await ctx.send(stop_line)
             delmsgs.append(delmsg)
             return 1, delmsgs
-            
+
         # Let the One Word Story start!
         start_line = random.choice(startup_lines)
         await ctx.send("Alright, lets begin! The number of words per message is **{}**! \nI'll go first: \n**{}**".format(await self.gconf.Word_count(), start_line))
         await asyncio.sleep(3)
         start_line = start_line.strip(".")
-        
+
+
+        ###
+
         # Takes user input on a cycle.
         start_line, end_users  = await self.take_input(ctx, join_users, start_line, bonus_round_time)
+
+        ###
 
         start_line += "."
         # A string with all the user's nicks.
@@ -317,16 +332,23 @@ class OneWordStory(commands.Cog):
             description = ('{}').format(embed_string)
             )
 
+        # TODO
+        # Check for permission to send/make embeds.
+
         # Sends the OWS in the current channel.
         await ctx.send(embed=embed)
         await self.config.guild(ctx.guild).set_raw(game_name, 'Counter', value = counter)
 
-        # Post it to the gallery.
-        gallery_channel_id = await self.config.guild(ctx.guild).Gallery_channel_id()
+        # Post it to the gallery (if it exists). Else skip.
+        try:
+            gallery_channel_id = await self.config.guild(ctx.guild).Gallery_channel_id()
 
-        if gallery_channel_id:
-            gallery_channel = self.bot.get_channel(gallery_channel_id)
-            await gallery_channel.send(embed=embed)
+            if gallery_channel_id:
+                gallery_channel = self.bot.get_channel(gallery_channel_id)
+                await gallery_channel.send(embed=embed)
+        except:
+            pass
+
         # Saves the newest OWS.
         embed_dict = embed.to_dict()
 
@@ -355,6 +377,7 @@ class OneWordStory(commands.Cog):
             return join_users, False
 
     async def take_input(self, ctx, join_users, start_line, bonus_round_time:int):
+        """The function that actually takes the user input."""
 
         def usercheck(message):
             return message.author != self.bot.user and message.channel.id == ctx.channel.id
