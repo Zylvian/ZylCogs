@@ -35,7 +35,8 @@ class Countdown_Tagger(commands.Cog):
     @checks.mod_or_permissions(administrator=True)
     @commands.group(autohelp=True)
     async def cd_tag(self, ctx):
-        """Cooldown Tagger group command"""
+        """Cooldown Tagger group command!
+        The current date is `{}`!""".format(premiere_date_str = await self.config.guild(ctx.guild).premiere_date())
         pass
 
     @cd_tag.command()
