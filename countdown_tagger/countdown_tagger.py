@@ -54,7 +54,10 @@ class Countdown_Tagger(commands.Cog):
                 message = await self.bot.wait_for('message',
                                                   timeout=15, check=usercheck)
 
-                new_date = dateutil.parser.parse(message.content, dayfirst=True)
+                try:
+                    new_date = dateutil.parser.parse(message.content, dayfirst=True)
+                except ValueError as e:
+                    await ctx.send("Incorrect date format! Try again:")
                 days_until_something = self.get_days_until_date(new_date)
                 if days_until_something <=0:
                     await ctx.send("This date has already passed! Try again:")
