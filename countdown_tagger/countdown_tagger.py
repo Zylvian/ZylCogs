@@ -115,8 +115,9 @@ class Countdown_Tagger(commands.Cog):
 
     @cd_tag.command()
     async def curr(self, ctx):
-        """Current date!"""
-        return await self.config.guild(ctx.guild).premiere_date()
+        """Display current cooldown date!"""
+        date = await self.config.guild(ctx.guild).premiere_date()
+        await ctx.send(date)
 
     async def get_send_msg(self, gconf):
 
