@@ -35,8 +35,7 @@ class Countdown_Tagger(commands.Cog):
     @checks.mod_or_permissions(administrator=True)
     @commands.group(autohelp=True)
     async def cd_tag(self, ctx):
-        """Cooldown Tagger group command!
-        The current date is `{}`!""".format(await self.config.guild(ctx.guild).premiere_date())
+        """Cooldown Tagger group command!"""
         pass
 
     @cd_tag.command()
@@ -113,6 +112,11 @@ class Countdown_Tagger(commands.Cog):
 
         except asyncio.TimeoutError:
             await ctx.send("Timed out!")
+
+    @cd_tag.command()
+    async def curr(self, ctx):
+        """Current date!"""
+        return await self.config.guild(ctx.guild).premiere_date()
 
     async def get_send_msg(self, gconf):
 
