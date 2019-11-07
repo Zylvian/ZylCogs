@@ -1,3 +1,4 @@
+import pytz
 from redbot.core import commands, Config, checks
 import datetime
 import dateutil.parser
@@ -70,7 +71,8 @@ class Countdown_Tagger(commands.Cog):
                                               timeout=15, check=usercheck)  # type: discord.Message
 
             if message.content == "y":
-                await gconf.premiere_date.set(str(new_date))
+                timezone_date = pytz.timezone('US/Eastern').localize(new_date)
+                await gconf.premiere_date.set(str(timezone_date))
                 await ctx.send("Saved!")
             else:
                 await ctx.send("Stopping.")
@@ -137,7 +139,12 @@ class Countdown_Tagger(commands.Cog):
 
     def get_days_until_date(self, premiere_date: datetime.datetime):
 
-        curr_time = datetime.datetime.now().replace(tzinfo=None)
-        days_til_something = (premiere_date - curr_time).days
+        eastern = pytz.timezone('US/Eastern')
+
+        curr_time = eastern.localize(datetime.datetime.now().replace(tzinfo=None))
+        premiere_date_local = eastern.localize(premiere_date)
+
+        days_til_something = (premiere_date_local - curr_time).days
 
         return days_til_something
+
