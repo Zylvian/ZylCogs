@@ -111,7 +111,7 @@ class Countdown_Tagger(commands.Cog):
 
             self.set_send_msg(gconf, send_msg)
 
-            await ctx.send('Message set!\n"{}'.format(self.get_send_msg()))
+            await ctx.send('Message set!\n"{}'.format(self.get_send_msg(gconf)))
 
         except asyncio.TimeoutError:
             await ctx.send("Timed out!")
@@ -130,6 +130,7 @@ class Countdown_Tagger(commands.Cog):
 
         premiere_date_str = await gconf.premiere_date()
         premiere_date = dateutil.parser.parse(premiere_date_str).replace(tzinfo=None)
+
         custom_msg = await gconf.custom_msg()
         msg_format = await gconf.msg_format()
 
