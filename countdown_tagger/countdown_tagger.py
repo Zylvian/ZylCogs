@@ -8,8 +8,8 @@ import asyncio
 from redbot.core.utils.predicates import MessagePredicate
 
 defaults = {"toggled": False,
-            "custom_msg": "Season 4 will premiere in",
-            "msg_format": "{} **{}** days!",
+            "custom_msg": "Season 4 will premiere",
+            "msg_format": "{} in **{}** days!",
             "premiere_date": None}
 
 
@@ -70,7 +70,7 @@ class Countdown_Tagger(commands.Cog):
             message = await self.bot.wait_for('message',
                                               timeout=15, check=usercheck)  # type: discord.Message
 
-            if message.content == "y":
+            if message.content.lower() == "y":
                 timezone_date = pytz.timezone('US/Eastern').localize(new_date)
                 await gconf.premiere_date.set(str(timezone_date))
                 await ctx.send("Saved!")
@@ -100,7 +100,7 @@ class Countdown_Tagger(commands.Cog):
         gconf = self.config.guild(ctx.guild)
 
 
-        await ctx.send('**Set your message:**\n*Format: "_________ x days!*"')
+        await ctx.send('**Set your message:**\n*Format: "*[something happens]* in x days!*"')
 
         usercheck = MessagePredicate.same_context(ctx)
 
@@ -114,7 +114,7 @@ class Countdown_Tagger(commands.Cog):
 
             new_message = await self.get_send_msg(gconf)
 
-            await ctx.send('Message set!\n"{}'.format(new_message))
+            await ctx.send('Message set!\n{}'.format(new_message))
 
         except asyncio.TimeoutError:
             await ctx.send("Timed out!")
@@ -139,10 +139,15 @@ class Countdown_Tagger(commands.Cog):
 
         days_til_something = self.get_days_until_date(premiere_date)
 
-        send_msg = msg_format.format(custom_msg, days_til_something)
+
+        msg_date = premiere_date.strftime("%d %B, %Y")
 
         if days_til_something <= 0:
-            send_msg = "*{}* has already passed!".format(premiere_date.strftime("%d %B, %Y"))
+            send_msg = "*{}* has already passed!".format(msg_date)
+        elif days_til_something == 0:
+            send_msg = "{} is today!".format(msg_date)
+        else:
+            send_msg = msg_format.format(custom_msg, days_til_something)
 
         return send_msg
 
@@ -150,10 +155,10 @@ class Countdown_Tagger(commands.Cog):
 
         eastern = pytz.timezone('US/Eastern')
 
-        curr_time = eastern.localize(datetime.datetime.now().replace(tzinfo=None))
+        curr_time = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None).astimezone(eastern)
         premiere_date_local = eastern.localize(premiere_date)
 
-        days_til_something = (premiere_date_local - curr_time).days
+        days_til_something = (premiere_date_local - curr_time).days+1
 
         return days_til_something
 
