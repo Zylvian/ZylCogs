@@ -106,11 +106,12 @@ class Countdown_Tagger(commands.Cog):
 
         try:
 
-            message = await self.bot.wait_for('message',
+            send_msg = await self.bot.wait_for('message',
                                               timeout=15, check=usercheck)
 
-            send_msg = await self.get_send_msg(gconf)
-            await ctx.send('Message set!\n"{}'.format(send_msg))
+            self.set_send_msg(gconf, send_msg)
+
+            await ctx.send('Message set!\n"{}'.format(self.get_send_msg()))
 
         except asyncio.TimeoutError:
             await ctx.send("Timed out!")
@@ -120,6 +121,10 @@ class Countdown_Tagger(commands.Cog):
         """Display current cooldown date!"""
         date = await self.config.guild(ctx.guild).premiere_date()
         await ctx.send(date)
+
+    async def set_send_msg(self, gconf, send_msg):
+        await gconf.custom_msg.set(send_msg)
+
 
     async def get_send_msg(self, gconf):
 
