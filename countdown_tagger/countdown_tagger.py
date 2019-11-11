@@ -113,7 +113,7 @@ class Countdown_Tagger(commands.Cog):
 
             new_message = self.get_send_msg(gconf)
 
-            await ctx.send('Message set!\n"{}'.format(new_message)
+            await ctx.send('Message set!\n"{}'.format(new_message))
 
         except asyncio.TimeoutError:
             await ctx.send("Timed out!")
