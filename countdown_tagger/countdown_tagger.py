@@ -109,9 +109,10 @@ class Countdown_Tagger(commands.Cog):
             send_msg = await self.bot.wait_for('message',
                                               timeout=15, check=usercheck)
 
-            await self.set_send_msg(gconf, send_msg)
+            msg_content = str(send_msg.content)
+            await self.set_send_msg(gconf, msg_content)
 
-            new_message = self.get_send_msg(gconf)
+            new_message = await self.get_send_msg(gconf)
 
             await ctx.send('Message set!\n"{}'.format(new_message))
 
