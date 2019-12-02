@@ -17,7 +17,7 @@ class LilHat(commands.Cog):
         ###
         self.path = bundled_data_path(self)
         ##
-        songs = await self.load_songs()
+        songs = self.load_songs()
 
         self.all_lyrics = self._get_all_lyrics_list(songs)
 
@@ -33,7 +33,7 @@ class LilHat(commands.Cog):
         random_lyric = random.choice(self.all_lyrics)
         await ctx.send(random_lyric)
 
-    async def load_songs(self):
+    def load_songs(self):
         filepath = self.path / 'songs.json'
         with open(filepath) as json_file:
             return (json.load(json_file))
