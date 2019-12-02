@@ -40,4 +40,4 @@ class LilHat(commands.Cog):
             return (json.load(json_file))
 
     def format_lyrics(self, lyric):
-        return "```{}\n-Lil Hat```".format(lyric)
+        return "```\"{}\"\n-Lil Hat```".format(lyric)

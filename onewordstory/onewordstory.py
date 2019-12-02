@@ -210,7 +210,7 @@ class OneWordStory(commands.Cog):
         # Will be used later for self-looping OWSes.
         #self.tasks.append(self.bot.loop.create_task(self.start_cont(ctx)))
 
-        self.start_cont(ctx)
+        await self.start_cont(ctx)
 
 
     async def start_cont(self, ctx):
