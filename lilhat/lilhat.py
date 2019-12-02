@@ -3,6 +3,7 @@ import json
 import random
 
 from redbot.core import commands, Config, checks
+from redbot.core.data_manager import bundled_data_path
 from redbot.core.utils import chat_formatting
 import discord
 from typing import Union, Optional
@@ -13,9 +14,10 @@ class LilHat(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=420420420, force_registration=True)
-
-        with open('songs.json', 'r') as file:
-            songs = json.load(file)
+        ###
+        self.path = bundled_data_path(self)
+        ##
+        songs = await self.load_songs()
 
         self.all_lyrics = self._get_all_lyrics_list(songs)
 
@@ -31,3 +33,7 @@ class LilHat(commands.Cog):
         random_lyric = random.choice(self.all_lyrics)
         await ctx.send(random_lyric)
 
+    async def load_songs(self):
+        filepath = self.path / 'songs.json'
+        with open(filepath) as json_file:
+            return (json.load(json_file))
