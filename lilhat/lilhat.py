@@ -27,7 +27,7 @@ class LilHat(commands.Cog):
         return un_nested_list
 
     @commands.command(autohelp=True)
-    def hat_me(self, ctx):
+    async def hat_me(self, ctx):
         random_lyric = random.choice(self.all_lyrics)
         await ctx.send(random_lyric)
 
