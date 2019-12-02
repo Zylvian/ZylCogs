@@ -14,7 +14,7 @@ class LilHat(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=420420420, force_registration=True)
 
-        with open('data/songs.json', 'r') as file:
+        with open('songs.json', 'r') as file:
             songs = json.load(file)
 
         self.all_lyrics = self._get_all_lyrics_list(songs)
