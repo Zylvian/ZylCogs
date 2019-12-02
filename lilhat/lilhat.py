@@ -4,9 +4,6 @@ import random
 
 from redbot.core import commands, Config, checks
 from redbot.core.data_manager import bundled_data_path
-from redbot.core.utils import chat_formatting
-import discord
-from typing import Union, Optional
 
 
 class LilHat(commands.Cog):

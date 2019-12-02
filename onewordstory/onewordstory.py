@@ -424,7 +424,7 @@ class OneWordStory(commands.Cog):
                 maybe_s_string = ""
                 if max_words_allowed > 1:
                     maybe_s_string = "s"
-                wordmsg = await ctx.send(f"*{start_line}*...\nAlright {tempuser.mention}, give me at most {max_words_allowed} word{maybe_s_string}! *{current} seconds remaining...*")
+                wordmsg = await ctx.send(f"```{start_line}...```\nAlright {tempuser.mention}, give me at most {max_words_allowed} word{maybe_s_string}! *{current} seconds remaining...*")
                                          #.format(start_line=start_line, max_words_allowed=max_words_allowed, user_mention=tempuser.mention, current=current, maybe_s_string=maybe_s_string))
                 
                 
