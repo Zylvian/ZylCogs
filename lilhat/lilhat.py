@@ -31,9 +31,13 @@ class LilHat(commands.Cog):
     @commands.command(autohelp=True)
     async def hat_me(self, ctx):
         random_lyric = random.choice(self.all_lyrics)
-        await ctx.send(random_lyric)
+        formatted_lyrics = self.format_lyrics(random_lyric)
+        await ctx.send(formatted_lyrics)
 
     def load_songs(self):
         filepath = self.path / 'songs.json'
         with open(filepath) as json_file:
             return (json.load(json_file))
+
+    def format_lyrics(self, lyric):
+        return "```{}\n-Lil Hat```".format(lyric)
