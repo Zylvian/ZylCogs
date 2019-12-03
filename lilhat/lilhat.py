@@ -1,3 +1,4 @@
+import asyncio
 import itertools
 import json
 import random
@@ -56,8 +57,7 @@ class LilHat(commands.Cog):
                                           timeout=15, check=usercheck)
 
         token = msg.content
-
-        await msg.delete
+        await msg.delete()
 
         try:
             await ctx.send("Downloading songs...")
