@@ -76,12 +76,13 @@ def get_all_songs(artist_id, headers):
 
     return songs
 
-def save_songs(songs_lyrics_listed):
+def save_songs(songs_lyrics_listed : tuple):
 
+    # Input is a tuple, where [0] is the song name, and [1] is a list of all the lyrics.
     save_json = {}
     for i, song_lyrics_list in enumerate(songs_lyrics_listed):
-        save_json[i+1] = song_lyrics_list
-
+        print(song_lyrics_list)
+        save_json[song_lyrics_list[0]] = song_lyrics_list[1]
 
     with open("songs.json", 'w') as file:
         file.write(json.dumps(save_json))
@@ -99,16 +100,22 @@ def downloader(token):
 
     songs = get_all_songs(artist_ids[0], headers)
 
-    all_song_lyrics_listed = list()
+
+    #all_song_lyrics_listed = list()
+
+    # Tuple with title and lyrics listed
+    all_song_names_lyrics_tupled = list()
 
     for song in songs:
         song_api_path = song["api_path"]
+        title = song["title_with_featured"]
         lyrics = lyrics_from_song_api_path(song_api_path, headers)
         song_lyrics_listed = clean_lyrics(lyrics)
         print(song_lyrics_listed)
-        all_song_lyrics_listed.append(song_lyrics_listed)
+        tupleman = [title,song_lyrics_listed]
+        all_song_names_lyrics_tupled.append(tupleman)
 
-    save_songs(all_song_lyrics_listed)
+    save_songs(all_song_names_lyrics_tupled)
 
 
 """if __name__ == "__main__":
