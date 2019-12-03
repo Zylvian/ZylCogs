@@ -1,5 +1,5 @@
 # ZylCogs
-Cogs for the Discord bot RedBot.
+Cogs for the Discord bot [RedBot](https://github.com/Cog-Creators/Red-DiscordBot).
 
 ---
 
