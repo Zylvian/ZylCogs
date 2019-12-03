@@ -47,7 +47,7 @@ class LilHat(commands.Cog):
 
     @commands.command(autohelp=True)
     async def update_hat(self, ctx):
-        await ctx.send("Post Genius API token:")
+        await ctx.send("Post Gednius API token:")
 
         usercheck = MessagePredicate.same_context(ctx)
 
@@ -56,6 +56,8 @@ class LilHat(commands.Cog):
                                           timeout=15, check=usercheck)
 
         token = msg.content
+
+        await msg.delete
 
         try:
             await ctx.send("Downloading songs...")
