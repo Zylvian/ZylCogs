@@ -63,9 +63,7 @@ class LilHat(commands.Cog):
             hat_song_download.downloader(token)
             await ctx.send("Songs downloaded!")
 
-            songs = self.load_songs()
-
-            self.all_lyrics = self._get_all_lyrics_list(songs)
+            self.all_lyrics = self.load_lyrics()
 
         except ValueError as e:
             await ctx.send("Token invalid.")
@@ -74,7 +72,7 @@ class LilHat(commands.Cog):
     @commands.command(autohelp=True)
     async def songs(self, ctx):
         songs = self.load_songs()
-        title_string = "**Current songs:\n"
+        title_string = "**Current songs:**\n"
         for song in songs:
             title_string += "*{}*\n".format(song[0])
 
