@@ -52,9 +52,10 @@ class LilHat(commands.Cog):
         usercheck = MessagePredicate.same_context(ctx)
 
 
-        token = await self.bot.wait_for('message',
+        msg = await self.bot.wait_for('message',
                                           timeout=15, check=usercheck)
 
+        token = msg.content
 
         try:
             await ctx.send("Downloading songs...")
