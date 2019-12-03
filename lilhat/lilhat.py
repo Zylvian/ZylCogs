@@ -48,7 +48,7 @@ class LilHat(commands.Cog):
 
     @commands.command(autohelp=True)
     async def update_hat(self, ctx):
-        await ctx.send("Post Gednius API token:")
+        await ctx.send("Post Genius API token:")
 
         usercheck = MessagePredicate.same_context(ctx)
 
@@ -63,6 +63,10 @@ class LilHat(commands.Cog):
             await ctx.send("Downloading songs...")
             hat_song_download.downloader(token)
             await ctx.send("Songs downloaded!")
+
+            songs = self.load_songs()
+
+            self.all_lyrics = self._get_all_lyrics_list(songs)
 
         except ValueError as e:
             await ctx.send("Token invalid.")
