@@ -4,12 +4,12 @@ import requests
 from bs4 import BeautifulSoup
 
 base_url = "http://api.genius.com"
-headers = {'Authorization': 'Bearer YL0JPnEfYb0daVQA_FmEwei7fVuYTXGQs3YkeulrIvv0-uuqMZ8WPRQJXcQUOhDs'}
+#headers = {}
 # artist_id = "26092"
 artist_ids = ["1261780"]
 
 
-def lyrics_from_song_api_path(song_api_path):
+def lyrics_from_song_api_path(song_api_path, headers):
     song_url = base_url + song_api_path
     response = requests.get(song_url, headers=headers)
     json = response.json()
@@ -42,7 +42,7 @@ def clean_lyrics(lyrics):
     return cleaned_lyrics_list
 
 
-def get_all_songs(artist_id):
+def get_all_songs(artist_id, headers):
     current_page = 1
     next_page = True
     songs = []
@@ -55,7 +55,12 @@ def get_all_songs(artist_id):
 
         path = "artists/{}/songs/".format(artist_id)
         params = {'page': current_page}
+
         response = requests.get(url=requrl, params=params, headers=headers)
+        if response.status_code == 401:
+            raise ValueError("Invalid token.")
+
+
         response = response.json()
 
         page_songs = response['response']['songs']
@@ -78,7 +83,6 @@ def save_songs(songs_lyrics_listed):
         save_json[i+1] = song_lyrics_list
 
 
-
     with open("songs.json", 'w') as file:
         file.write(json.dumps(save_json))
 
@@ -87,9 +91,31 @@ def print_song():
         dictman = json.load(file)
         print(dictman["1"])
 
-if __name__ == "__main__":
+
+def downloader(token):
+    search_url = base_url + "/search"
+
+    headers = {'Authorization': 'Bearer {}'.format(token)}
+
+    songs = get_all_songs(artist_ids[0], headers)
+
+    all_song_lyrics_listed = list()
+
+    for song in songs:
+        song_api_path = song["api_path"]
+        lyrics = lyrics_from_song_api_path(song_api_path, headers)
+        song_lyrics_listed = clean_lyrics(lyrics)
+        print(song_lyrics_listed)
+        all_song_lyrics_listed.append(song_lyrics_listed)
+
+    save_songs(all_song_lyrics_listed)
+
+
+"""if __name__ == "__main__":
 
     #token = input("INPUT TOKEN:")
+    
+    
 
     search_url = base_url + "/search"
 
@@ -105,4 +131,4 @@ if __name__ == "__main__":
         all_song_lyrics_listed.append(song_lyrics_listed)
 
 
-    save_songs(all_song_lyrics_listed)
+    save_songs(all_song_lyrics_listed)"""

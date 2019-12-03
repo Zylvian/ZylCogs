@@ -5,6 +5,9 @@ import random
 from redbot.core import commands, Config, checks
 from redbot.core.data_manager import bundled_data_path
 
+import hat_song_download
+from redbot.core.utils.predicates import MessagePredicate
+
 
 class LilHat(commands.Cog):
 
@@ -38,3 +41,25 @@ class LilHat(commands.Cog):
 
     def format_lyrics(self, lyric):
         return "```\"{}\"\n-Lil Hat```".format(lyric)
+
+    ###
+
+    @commands.command(autohelp=True)
+    async def update_hat(self, ctx):
+        await ctx.send("Post Genius API token:")
+
+        usercheck = MessagePredicate.same_context(ctx)
+
+
+        token = await self.bot.wait_for('message',
+                                          timeout=15, check=usercheck)
+
+
+        try:
+            await ctx.send("Downloading songs...")
+            hat_song_download.downloader(token)
+            await ctx.send("Songs downloaded!")
+
+        except ValueError as e:
+            await ctx.send("Token invalid.")
+            return

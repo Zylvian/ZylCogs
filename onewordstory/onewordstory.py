@@ -116,6 +116,18 @@ class OneWordStory(commands.Cog):
         """Remove one of the active sets of starting lines."""
         await self.add_or_rem(ctx, False)
 
+    """"@lines.command()
+    async def curr(self, ctx):
+        #The current enabled lines.
+        #await self.add_or_rem(ctx, False)
+        #await self.lines
+        pass"""
+
+    """"@ows.command()
+    async def add_line(self, ctx):
+        current_categories = await self.gconf.Startup_lines()"""
+
+
     async def get_default_lines(self, ctx):
         filepath = self.path / 'default_lines.json'
         with open(filepath) as json_file:
