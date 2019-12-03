@@ -51,9 +51,11 @@ class LilHat(commands.Cog):
 
         usercheck = MessagePredicate.same_context(ctx)
 
-
-        msg = await self.bot.wait_for('message',
+        try:
+            msg = await self.bot.wait_for('message',
                                           timeout=15, check=usercheck)
+        except asyncio.TimeoutError:
+            await ctx.send("Timed out!")
 
         token = msg.content
         await msg.delete()
@@ -74,8 +76,9 @@ class LilHat(commands.Cog):
     async def songs(self, ctx):
         songs = self.load_songs()
         title_string = "**Current songs:**\n"
-        for song in songs:
-            title_string += "*{}*\n".format(song[0])
+        title_list = [title for title in songs.keys()]
+        for title in title_list:
+            title_string += "*{}*\n".format(title)
 
 
         await ctx.send(title_string)
