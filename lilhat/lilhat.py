@@ -21,25 +21,21 @@ class LilHat(commands.Cog):
         self.path = cog_data_path(self)
         ##
 
-        self.all_lyrics = self.load_lyrics()
+        try:
+            self.all_lyrics = self.load_lyrics()
+        except FileNotFoundError:
+            self.all_lyrics = []
 
-
-    def _get_all_lyrics_list(self, songs):
-        song_list = [song for song in songs.values()]
-        massive_list = [lyric for lyric in song_list]
-        un_nested_list = list(itertools.chain.from_iterable(massive_list))
-        return un_nested_list
 
     @commands.command(autohelp=True)
     async def hat_me(self, ctx):
-        random_lyric = random.choice(self.all_lyrics)
-        formatted_lyrics = self.format_lyrics(random_lyric)
-        await ctx.send(formatted_lyrics)
-
-    def load_songs(self):
-        filepath = self.path / 'songs.json'
-        with open(filepath) as json_file:
-            return json.load(json_file)
+        
+        if self.all_lyrics:
+            random_lyric = random.choice(self.all_lyrics)
+            formatted_lyrics = self.format_lyrics(random_lyric)
+            await ctx.send(formatted_lyrics)
+        else
+            await ctx.send("Songs haven't been downloaded!")
 
     def format_lyrics(self, lyric):
         return "```\"{}\"\n-Lil Hat```".format(lyric)
@@ -48,6 +44,9 @@ class LilHat(commands.Cog):
 
     @commands.command(autohelp=True)
     async def update_hat(self, ctx):
+        await self.download_songs()
+
+    async def download_songs(self, ctx):
         botmsg = await ctx.send("Post Genius API token:")
 
         usercheck = MessagePredicate.same_context(ctx)
@@ -81,6 +80,18 @@ class LilHat(commands.Cog):
 
         await ctx.send(title_string)
 
+    def load_songs(self):
+        filepath = self.path / 'songs.json'
+        with open(filepath) as json_file:
+            return json.load(json_file)
+
     def load_lyrics(self):
         songs = self.load_songs()
         return self._get_all_lyrics_list(songs)
+
+
+    def _get_all_lyrics_list(self, songs):
+        song_list = [song for song in songs.values()]
+        massive_list = [lyric for lyric in song_list]
+        un_nested_list = list(itertools.chain.from_iterable(massive_list))
+        return un_nested_list
