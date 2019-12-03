@@ -44,7 +44,7 @@ class LilHat(commands.Cog):
 
     @commands.command(autohelp=True)
     async def update_hat(self, ctx):
-        await self.download_songs()
+        await self.download_songs(ctx)
 
     async def download_songs(self, ctx):
         botmsg = await ctx.send("Post Genius API token:")
