@@ -4,9 +4,10 @@ import random
 
 from redbot.core import commands, Config, checks
 from redbot.core.data_manager import bundled_data_path
-
-import hat_song_download
 from redbot.core.utils.predicates import MessagePredicate
+
+
+from . import hat_song_download
 
 
 class LilHat(commands.Cog):
