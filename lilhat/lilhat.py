@@ -29,12 +29,12 @@ class LilHat(commands.Cog):
 
     @commands.command(autohelp=True)
     async def hat_me(self, ctx):
-        
+
         if self.all_lyrics:
             random_lyric = random.choice(self.all_lyrics)
             formatted_lyrics = self.format_lyrics(random_lyric)
             await ctx.send(formatted_lyrics)
-        else
+        else:
             await ctx.send("Songs haven't been downloaded!")
 
     def format_lyrics(self, lyric):
