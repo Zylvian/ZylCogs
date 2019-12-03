@@ -4,7 +4,7 @@ import json
 import random
 
 from redbot.core import commands, Config, checks
-from redbot.core.data_manager import bundled_data_path
+from redbot.core.data_manager import bundled_data_path, cog_data_path
 from redbot.core.utils.predicates import MessagePredicate
 
 
@@ -17,7 +17,8 @@ class LilHat(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=420420420, force_registration=True)
         ###
-        self.path = bundled_data_path(self)
+        #self.path = bundled_data_path(self)
+        self.path = cog_data_path(self)
         ##
 
         self.all_lyrics = self.load_lyrics()
@@ -38,7 +39,7 @@ class LilHat(commands.Cog):
     def load_songs(self):
         filepath = self.path / 'songs.json'
         with open(filepath) as json_file:
-            return (json.load(json_file))
+            return json.load(json_file)
 
     def format_lyrics(self, lyric):
         return "```\"{}\"\n-Lil Hat```".format(lyric)
@@ -47,7 +48,7 @@ class LilHat(commands.Cog):
 
     @commands.command(autohelp=True)
     async def update_hat(self, ctx):
-        await ctx.send("Post Genius API token:")
+        botmsg = await ctx.send("Post Genius API token:")
 
         usercheck = MessagePredicate.same_context(ctx)
 
@@ -57,6 +58,7 @@ class LilHat(commands.Cog):
 
         token = msg.content
         await msg.delete()
+        await botmsg.delete()
 
         try:
             await ctx.send("Downloading songs...")
