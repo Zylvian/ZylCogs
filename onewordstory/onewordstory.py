@@ -77,7 +77,9 @@ class OneWordStory(commands.Cog):
     @settings.command()
     async def counter_reset(self,ctx):
         """Resets the game counter! (the "One Word Story #xx" counter)"""
+        self.gconf = self.config.guild(ctx.guild)
         await self.gconf.Word_count.set(0)
+
         await ctx.send("Counter reset to 0!")
 
     @ows.command()
@@ -99,6 +101,8 @@ class OneWordStory(commands.Cog):
         pred = MessagePredicate.valid_int(ctx)
         await ctx.bot.wait_for('message', timeout=7, check=pred)
         number_choice = pred.result  # Minus one due to 0-indexed"""
+        self.gconf = self.config.guild(ctx.guild)
+
         if word_count < 1:
             return await ctx.send("You can't have 0 words!")
         else:
