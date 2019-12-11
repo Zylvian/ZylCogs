@@ -53,17 +53,18 @@ class OneWordStory(commands.Cog):
         for task in self.tasks:
             task.cancel()
 
-    @checks.mod_or_permissions(administrator=True)
     @commands.group(autohelp=True)
     async def ows(self, ctx):
         """Ows group command"""
         pass
 
+    @checks.mod_or_permissions(administrator=True)
     @ows.group(autohelp=True)
     async def gallery(self, ctx):
         """Gallery settings"""
         pass
 
+    @checks.mod_or_permissions(administrator=True)
     @ows.group(autohelp=True)
     async def settings(self, ctx):
         """General OWS settings"""
@@ -82,6 +83,7 @@ class OneWordStory(commands.Cog):
 
         await ctx.send("Counter reset to 0!")
 
+    @checks.mod_or_permissions(administrator=True)
     @ows.command()
     async def rules(self, ctx):
         """How this game works!"""
