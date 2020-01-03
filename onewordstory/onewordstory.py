@@ -94,6 +94,7 @@ class OneWordStory(commands.Cog):
                        "*(The timer resets for each new word added.)* ")
 
 
+    # TODO: Make ows start [optional word count] and make this function - wordcount - the default.
     @settings.command()
     async def wordcount(self, ctx, word_count:int):
         """Set how many words are allowed per prompt!"""
