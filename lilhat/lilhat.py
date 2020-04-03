@@ -63,7 +63,7 @@ class LilHat(commands.Cog):
 
         try:
             await ctx.send("Downloading songs...")
-            hat_song_download.downloader(token)
+            hat_song_download.downloader(token, self.path)
             await ctx.send("Songs downloaded!")
 
             self.all_lyrics = self.load_lyrics()
