@@ -1,5 +1,6 @@
 {
     "author" : ["Zylvian"],
     "install_msg" : "Songs need to be downloaded! Find your Genius API token, and do [p]update_hat to get started!",
-    "name" : "Lil Hat"
+    "name" : "Lil Hat",
+    "requirements": ["bs4","aiohttp"]
 }
