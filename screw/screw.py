@@ -18,4 +18,4 @@ class Screw(commands.Cog):
 
             await message.channel.send(send_msg)
 
-            asyncio.sleep(2)
+            await asyncio.sleep(2)

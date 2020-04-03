@@ -1,6 +1,7 @@
 import json
 
-import requests
+#import requests
+import aiohttp as requests
 from bs4 import BeautifulSoup
 
 base_url = "http://api.genius.com"
@@ -122,7 +123,7 @@ def downloader(token):
 
     #token = input("INPUT TOKEN:")
     
-    
+    headers = {'Authorization': 'Bearer {}'.format(token)}
 
     search_url = base_url + "/search"
 
@@ -138,4 +139,5 @@ def downloader(token):
         all_song_lyrics_listed.append(song_lyrics_listed)
 
 
-    save_songs(all_song_lyrics_listed)"""
+    save_songs(all_song_lyrics_listed)
+"""
