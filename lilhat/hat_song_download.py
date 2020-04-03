@@ -1,7 +1,8 @@
 import json
 
-#import requests
-import aiohttp as requests
+import requests
+# TODO: Convert requests to aiohttp (requests blocks entire bot).
+#import aiohttp
 from bs4 import BeautifulSoup
 
 base_url = "http://api.genius.com"
