@@ -223,16 +223,16 @@ class OneWordStory(commands.Cog):
         await ctx.send("Removed gallery channel. No gallery channel is set.s")
  
     @ows.command()
-    async def start(self, ctx):
+    async def start(self, ctx, wordcount: Optional[int]):
         """Starts a game of One Word Story!"""
 
         # Will be used later for self-looping OWSes.
         #self.tasks.append(self.bot.loop.create_task(self.start_cont(ctx)))
 
-        await self.start_cont(ctx)
+        await self.start_cont(ctx, wordcount)
 
 
-    async def start_cont(self, ctx):
+    async def start_cont(self, ctx, wordcountopt):
         """ows_values = {
                     "Games":{
                         "One Word Story":
@@ -248,8 +248,12 @@ class OneWordStory(commands.Cog):
         startup_lines = list()
         global bonus_round_time
         bonus_round_time = 0
+
         global max_words_allowed
-        max_words_allowed = await self.gconf.Word_count()
+        if not wordcountopt:
+            max_words_allowed = await self.gconf.Word_count()
+        else:
+            max_words_allowed = wordcountopt
 
         with open(filepath) as json_file:  
             data = json.load(json_file)
@@ -268,7 +272,7 @@ class OneWordStory(commands.Cog):
         try:
             counter = await self.config.guild(ctx.guild).get_raw(game_name,'Counter')
         except KeyError:
-            counter = 1
+            counter = 0
             await self.config.guild(ctx.guild).set_raw(game_name, 'Counter', value = counter)
 
         def usercheck(message):
@@ -339,8 +343,9 @@ class OneWordStory(commands.Cog):
         users_string = users_string[:-2]
 
         embed_string = start_line + "\n \n" + users_string
-            
+
         counter += 1
+
         delmessage = await ctx.send("Let's see what we got here...")
         await asyncio.sleep(3)
         await delmessage.delete()
@@ -445,7 +450,7 @@ class OneWordStory(commands.Cog):
                 # If the amount of words is over 1, add an s to "word(s)".
                 if max_words_allowed > 1:
                     maybe_s_string = "s"
-                wordmsg = await ctx.send(f"**Story so far**\n```{start_line}...```\nAlright {tempuser.mention}, give me at most {max_words_allowed} word{maybe_s_string}! *{current} seconds remaining...*")
+                wordmsg = await ctx.send(f"**Story so far**\n```{start_line}...```\nAlright {tempuser.mention}, give me at most **{max_words_allowed}** word{maybe_s_string}! *{current} seconds remaining...*")
                                          #.format(start_line=start_line, max_words_allowed=max_words_allowed, user_mention=tempuser.mention, current=current, maybe_s_string=maybe_s_string))
                 
                 
