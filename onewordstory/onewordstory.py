@@ -1,6 +1,6 @@
 import math
 import time
-#from cog_utils import *
+from typing import Optional
 
 # Red
 from redbot.core.utils.predicates import MessagePredicate
