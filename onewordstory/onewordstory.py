@@ -285,7 +285,7 @@ class OneWordStory(commands.Cog):
         start_msg = await ctx.send("✎ **ONE WORD STORY TIME!** 📖\n"
                                    "*Words per user: **{user_words}***\n"
                                    "Beep boop, it's time to play **'One Word Story!'**\nType **ows** in the chat to join! We start in {start_time} seconds!\n"
-                                    "Type **Goodbye.** to end the story early."
+                                    "*Type **Goodbye.** to end the story early.*"
                                    .format(start_time=start_time,user_words=max_words_allowed))
         
         delmsgs = []
