@@ -43,8 +43,7 @@ class OneWordStory(commands.Cog):
                             'Startup_lines':['General'],
                             'Word_count': 1
                             }
-                            
-        # If releasing, make sure to change the channel ID. Can be an available command with e.g set_channel
+
         
         self.config.register_guild(**ows_defaults)
 
@@ -285,7 +284,8 @@ class OneWordStory(commands.Cog):
         start_time = await self.config.guild(ctx.guild).get_raw('Start_time')
         start_msg = await ctx.send("✎ **ONE WORD STORY TIME!** 📖\n"
                                    "*Words per user: **{user_words}***\n"
-                                   "Beep boop, it's time to play **'One Word Story!'**\nType **ows** in the chat to join! We start in {start_time} seconds!"
+                                   "Beep boop, it's time to play **'One Word Story!'**\nType **ows** in the chat to join! We start in {start_time} seconds!\n"
+                                    "Type **Goodbye.** to end the story early."
                                    .format(start_time=start_time,user_words=max_words_allowed))
         
         delmsgs = []
