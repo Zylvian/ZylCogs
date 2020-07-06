@@ -1,7 +1,10 @@
+import asyncio
+import random
+
 import syllables
 
 
-def _haiku(self, ctx):
+async def _haiku(self, ctx):
     await ctx.send("Welcome to the haiku games yeehaw")
     user_cd = 30
 

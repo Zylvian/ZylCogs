@@ -226,7 +226,7 @@ class OneWordStory(commands.Cog):
     async def haiku(self, ctx):
         """Start a game of haiku!"""
         from .haiku import _haiku
-        _haiku(self, ctx)
+        await _haiku(self, ctx)
 
     @ows.command()
     async def start(self, ctx, wordcount: Optional[int]):
