@@ -16,6 +16,7 @@ from redbot.core.data_manager import bundled_data_path
 
 # Discord 
 import discord
+import discord.py
 
 # Others
 import asyncio
@@ -263,7 +264,7 @@ class OneWordStory(commands.Cog):
         except asyncio.TimeoutError:
             await ctx.send("Timed out, closing this battle.")
 
-        await ctx.send(f"**{title}:**")
+        await ctx.send(f"***~~{title}:~~***")
         await ctx.send(f"```\n{haiku}```")
 
     @ows.command()
