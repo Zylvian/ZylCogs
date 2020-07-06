@@ -3,6 +3,7 @@ import time
 from typing import Optional
 
 # Red
+import syllables
 from redbot.core.utils.predicates import MessagePredicate
 from redbot.core.utils.chat_formatting import humanize_list
 
@@ -241,6 +242,7 @@ class OneWordStory(commands.Cog):
                             }
                         }
                     }"""
+
         self.gconf = self.config.guild(ctx.guild)
         current_categories = await self.gconf.get_raw("Startup_lines")
         filepath = self.path / 'default_lines.json'
@@ -303,7 +305,7 @@ class OneWordStory(commands.Cog):
                                               )
 
                 # Checks if the bad boy needs to be added.
-                (join_users, join_bool) = await self.join_user_add(ctx, message, join_users)
+                (join_users, join_bool) = await self.ows_join_check(ctx, message, join_users)
                 if join_bool:
                     bonus_round_time += user_time_add
                     await ctx.send("+{} 🕒 total seconds have been added to the game clock!".format(bonus_round_time))
@@ -392,7 +394,7 @@ class OneWordStory(commands.Cog):
     """
     Checks if the message is user join worthy.
     """
-    async def join_user_add(self, ctx, message:discord.Message, join_users: list):
+    async def ows_join_check(self, ctx, message:discord.Message, join_users: list) -> (list, bool):
         if message.author not in join_users and message.content.lower()=="ows":
                 join_users.append(message.author)
                 await ctx.send("{} joined!".format(message.author.mention))
@@ -504,7 +506,7 @@ class OneWordStory(commands.Cog):
                             await ctx.send("Max {} word{} allowed!".format(max_words_allowed, maybe_s_string))
                     # Any other people typing
                     else:
-                        (join_users, join_bool) = await self.join_user_add(ctx, message, join_users)
+                        (join_users, join_bool) = await self.ows_join_check(ctx, message, join_users)
                         if join_bool:
                             timeout_value += user_time_add
 
@@ -521,4 +523,36 @@ class OneWordStory(commands.Cog):
 
                 else:
                     await ctx.send("Time out! Next user!")
-    
+
+
+    @ows.command
+    async def haiku(self, ctx):
+
+        async def get_haiku_line(sylls):
+            user_cd = 15
+            while True:
+                await ctx.send(f"Give me {sylls} syllables")
+                message = await self.bot.wait_for('message',
+                                                  timeout=user_cd, check=usercheck)
+                act_sylls = syllables.estimate(message.content)
+                if sylls != act_sylls:
+                    print("Wrong amount of sylls.")
+                else:
+                    return message
+
+
+        def usercheck(message):
+            return message.author != self.bot.user and message.channel.id == ctx.channel.id
+
+        choices = [[2, 3], [3, 4], [2, 3]]
+        haiku = ""
+        for bah in choices:
+            random.shuffle(bah)
+            for num in bah:
+                haiku += await get_haiku_line(num) + ""
+
+            haiku += "\n"
+
+        await ctx.send("Check out this haiku, children:")
+        await ctx.send(f"```\n{haiku}````")
+
