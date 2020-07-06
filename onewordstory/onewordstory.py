@@ -452,6 +452,7 @@ class OneWordStory(commands.Cog):
                 # pick_users.remove(tempuser)
 
                 tempuser = pick_users.pop(0)
+                queue_display = [user.display_name for user in pick_users]
 
                 current = datetime.datetime.now()
                 current=(timeout_value - (current-begin).seconds)
@@ -462,8 +463,8 @@ class OneWordStory(commands.Cog):
                 # If the amount of words is over 1, add an s to "word(s)".
                 if max_words_allowed > 1:
                     maybe_s_string = "s"
-                wordmsg = await ctx.send(f"**Story so far**\n```{start_line}...```\n"
-                                         f"*Queue:{pick_users}*"
+                wordmsg = await ctx.send(f"**Story so far:**\n```{start_line}...```\n"
+                                         f"*Queue: {queue_display}\n*"
                                          f"Alright {tempuser.mention}, give me at most **{max_words_allowed}** word{maybe_s_string}! "
                                          f"*{current} seconds remaining...*")
                                          #.format(start_line=start_line, max_words_allowed=max_words_allowed, user_mention=tempuser.mention, current=current, maybe_s_string=maybe_s_string))
