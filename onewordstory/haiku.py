@@ -44,5 +44,5 @@ async def _haiku(self, ctx):
     except asyncio.TimeoutError:
         await ctx.send("Timed out, closing this battle.")
 
-    await ctx.send(f"***~~{title}:~~***")
+    await ctx.send(f"***\~\~{title}:\~\~***")
     await ctx.send(f"```\n{haiku}```")
