@@ -527,6 +527,7 @@ class OneWordStory(commands.Cog):
 
     @ows.command
     async def haiku(self, ctx):
+        """Start a game of haiku!"""
 
         async def get_haiku_line(sylls):
             user_cd = 15
