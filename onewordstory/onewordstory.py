@@ -447,9 +447,11 @@ class OneWordStory(commands.Cog):
                     pick_users = join_users.copy()
                     random.shuffle(pick_users)
 
+                # Old implementation
                 # tempuser = random.choice(pick_users)
+                # pick_users.remove(tempuser)
+
                 tempuser = pick_users.pop(0)
-                pick_users.remove(tempuser)
 
                 current = datetime.datetime.now()
                 current=(timeout_value - (current-begin).seconds)
