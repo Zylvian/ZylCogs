@@ -221,7 +221,41 @@ class OneWordStory(commands.Cog):
     async def rem(self, ctx, rem_gallery_channel: discord.TextChannel):
         await self.config.guild(ctx.guild).set_raw("Gallery_channel_id", value=rem_gallery_channel.id)
         await ctx.send("Removed gallery channel. No gallery channel is set.s")
- 
+
+    @ows.command()
+    async def haiku(self, ctx):
+        """Start a game of haiku!"""
+
+        await ctx.send("Welcome to the haiku games yeehaw")
+
+        async def get_haiku_line(sylls):
+            user_cd = 15
+            while True:
+                await ctx.send(f"Give me {sylls} syllables")
+                message = await self.bot.wait_for('message',
+                                                  timeout=user_cd, check=usercheck)
+                act_sylls = syllables.estimate(message.content)
+                if sylls != act_sylls:
+                    print("Wrong amount of sylls.")
+                else:
+                    return message
+
+
+        def usercheck(message):
+            return message.author != self.bot.user and message.channel.id == ctx.channel.id
+
+        choices = [[2, 3], [3, 4], [2, 3]]
+        haiku = ""
+        for bah in choices:
+            random.shuffle(bah)
+            for num in bah:
+                haiku += await get_haiku_line(num) + ""
+
+            haiku += "\n"
+
+        await ctx.send("Check out this haiku, children:")
+        await ctx.send(f"```\n{haiku}````")
+
     @ows.command()
     async def start(self, ctx, wordcount: Optional[int]):
         """Starts a game of One Word Story!"""
@@ -525,35 +559,5 @@ class OneWordStory(commands.Cog):
                     await ctx.send("Time out! Next user!")
 
 
-    @ows.command
-    async def haiku(self, ctx):
-        """Start a game of haiku!"""
 
-        async def get_haiku_line(sylls):
-            user_cd = 15
-            while True:
-                await ctx.send(f"Give me {sylls} syllables")
-                message = await self.bot.wait_for('message',
-                                                  timeout=user_cd, check=usercheck)
-                act_sylls = syllables.estimate(message.content)
-                if sylls != act_sylls:
-                    print("Wrong amount of sylls.")
-                else:
-                    return message
-
-
-        def usercheck(message):
-            return message.author != self.bot.user and message.channel.id == ctx.channel.id
-
-        choices = [[2, 3], [3, 4], [2, 3]]
-        haiku = ""
-        for bah in choices:
-            random.shuffle(bah)
-            for num in bah:
-                haiku += await get_haiku_line(num) + ""
-
-            haiku += "\n"
-
-        await ctx.send("Check out this haiku, children:")
-        await ctx.send(f"```\n{haiku}````")
 
