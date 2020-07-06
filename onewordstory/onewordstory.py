@@ -228,17 +228,18 @@ class OneWordStory(commands.Cog):
 
         await ctx.send("Welcome to the haiku games yeehaw")
 
-        async def get_haiku_line(sylls):
+        async def get_haiku_line(sylls) -> str:
             user_cd = 15
             while True:
                 await ctx.send(f"Give me {sylls} syllables")
                 message = await self.bot.wait_for('message',
                                                   timeout=user_cd, check=usercheck)
-                act_sylls = syllables.estimate(message.content)
+                cont = message.content
+                act_sylls = syllables.estimate(cont)
                 if sylls != act_sylls:
                     print("Wrong amount of sylls.")
                 else:
-                    return message
+                    return cont
 
 
         def usercheck(message):
