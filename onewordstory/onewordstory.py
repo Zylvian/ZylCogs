@@ -16,7 +16,6 @@ from redbot.core.data_manager import bundled_data_path
 
 # Discord 
 import discord
-import discord.py
 
 # Others
 import asyncio
