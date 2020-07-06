@@ -226,46 +226,8 @@ class OneWordStory(commands.Cog):
     @ows.command()
     async def haiku(self, ctx):
         """Start a game of haiku!"""
-
-        await ctx.send("Welcome to the haiku games yeehaw")
-        user_cd = 30
-
-        async def get_haiku_line(sylls) -> str:
-            while True:
-                await ctx.send(f"Give me {sylls} syllables")
-                message = await self.bot.wait_for('message',
-                                                  timeout=user_cd, check=usercheck)
-                cont = message.content
-                act_sylls = syllables.estimate(cont)
-                if sylls != act_sylls:
-                    await ctx.send("Wrong amount of syllables.")
-                else:
-                    return cont
-
-
-        def usercheck(message):
-            return message.author != self.bot.user and message.channel.id == ctx.channel.id
-
-        try:
-            choices = [[2, 3], [3, 4], [2, 3]]
-            haiku = ""
-            for bah in choices:
-                random.shuffle(bah)
-                for num in bah:
-                    haiku += await get_haiku_line(num) + " "
-
-                haiku += "\n"
-
-            await ctx.send("And what's the name of this haiku?")
-            message = await self.bot.wait_for('message',
-                                              timeout=user_cd, check=usercheck)
-            title=message.content
-
-        except asyncio.TimeoutError:
-            await ctx.send("Timed out, closing this battle.")
-
-        await ctx.send(f"***~~{title}:~~***")
-        await ctx.send(f"```\n{haiku}```")
+        from .haiku import _haiku
+        _haiku(self, ctx)
 
     @ows.command()
     async def start(self, ctx, wordcount: Optional[int]):
@@ -484,8 +446,10 @@ class OneWordStory(commands.Cog):
                 # Picks a random user.
                 if not pick_users:
                     pick_users = join_users.copy()
+                    random.shuffle(pick_users)
 
-                tempuser = random.choice(pick_users)
+                # tempuser = random.choice(pick_users)
+                tempuser = pick_users.pop(0)
                 pick_users.remove(tempuser)
 
                 current = datetime.datetime.now()
@@ -497,7 +461,10 @@ class OneWordStory(commands.Cog):
                 # If the amount of words is over 1, add an s to "word(s)".
                 if max_words_allowed > 1:
                     maybe_s_string = "s"
-                wordmsg = await ctx.send(f"**Story so far**\n```{start_line}...```\nAlright {tempuser.mention}, give me at most **{max_words_allowed}** word{maybe_s_string}! *{current} seconds remaining...*")
+                wordmsg = await ctx.send(f"**Story so far**\n```{start_line}...```\n"
+                                         f"*Queue:{pick_users}*"
+                                         f"Alright {tempuser.mention}, give me at most **{max_words_allowed}** word{maybe_s_string}! "
+                                         f"*{current} seconds remaining...*")
                                          #.format(start_line=start_line, max_words_allowed=max_words_allowed, user_mention=tempuser.mention, current=current, maybe_s_string=maybe_s_string))
                 
                 
@@ -551,6 +518,7 @@ class OneWordStory(commands.Cog):
                             await ctx.send("Max {} word{} allowed!".format(max_words_allowed, maybe_s_string))
                     # Any other people typing
                     else:
+                        join_users: list
                         (join_users, join_bool) = await self.ows_join_check(ctx, message, join_users)
                         if join_bool:
                             timeout_value += user_time_add
