@@ -11,6 +11,6 @@ Cogs for the Discord bot [RedBot](https://github.com/Cog-Creators/Red-DiscordBot
 
 `derpify` - Derpify any text or a message from ID *(thIS iS a dERpiFieD meSsAGge)*.
 
-`clapify` - Clapify any text or a message from ID *(👏this👏is👏a👏clapified👏message)*.
+`clapify` - Clapify any text or a message from ID *(👏this👏is👏a👏clapified👏message👏)*.
 
 `screw` - Responds with "*screw `\n \n` screw*" every time you write "screw" in the chat (or does it?).
