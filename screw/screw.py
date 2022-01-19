@@ -62,7 +62,7 @@ I'll climb Mount Cleverest on a Wim Hof (yeah)
 I'll make your mother proud of you the family unit
 I'll make your mother proud of you the family unit
 I slow down when others go faster
-Forget the writing, I am the master
+Forget the writing, I own the master
 (Gold futures trade) Take delivery
 ('Cause on a bank run, I got stability)
 Learn somethin', edutainment
