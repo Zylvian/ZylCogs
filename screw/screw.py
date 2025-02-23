@@ -3,6 +3,7 @@ import discord
 import asyncio
 import random
 
+
 class Screw(commands.Cog):
 
     def __init__(self, bot):
@@ -12,15 +13,12 @@ class Screw(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
 
-        gconf = self.config.guild(message.guild)
-
         if "screw" in message.content.lower() and message.author != self.bot.user:
             send_msg = self.roll_hook()
 
             await message.channel.send(send_msg)
 
             await asyncio.sleep(2)
-
 
     def roll_hook(self):
 
@@ -34,7 +32,6 @@ class Screw(commands.Cog):
 
         else:
             return "screw \n \nscrew"
-
 
     def get_lyrics(self):
         return """Ahh, Uh P-Mo bump babu

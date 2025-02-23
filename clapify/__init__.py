@@ -1,5 +1,5 @@
 from .clapify import Clapify
 
-def setup(bot):
-    bot.add_cog(Clapify(bot))
 
+async def setup(bot):
+    await bot.add_cog(Clapify(bot))
