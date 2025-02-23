@@ -1,5 +1,5 @@
 from .derpify import Derpify
 
-def setup(bot):
-    bot.add_cog(Derpify (bot))
 
+async def setup(bot):
+    await bot.add_cog(Derpify(bot))

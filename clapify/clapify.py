@@ -1,6 +1,6 @@
 import json
 
-from redbot.core import commands, Config, checks
+from redbot.core import commands, Config, app_commands
 from redbot.core.utils import chat_formatting
 import discord
 from typing import Union, Optional
@@ -13,7 +13,7 @@ class Clapify(commands.Cog):
         self.config = Config.get_conf(self, identifier=420420420, force_registration=True)
 
     @commands.bot_has_permissions(manage_messages=True)
-    @commands.command(autohelp=True)
+    @app_commands.command()
     async def clapify(self, ctx, emoji: Optional[discord.Emoji], *, var: Union[int, str]):
         """Give me a string or a message ID!"""
         #

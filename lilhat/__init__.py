@@ -1,5 +1,5 @@
 from .lilhat import LilHat
 
-def setup(bot):
-    bot.add_cog(LilHat(bot))
 
+async def setup(bot):
+    await bot.add_cog(LilHat(bot))
